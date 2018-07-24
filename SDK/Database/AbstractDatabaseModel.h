@@ -1,15 +1,16 @@
-#ifndef ABSTRACTDATABASEMODEL_H
+﻿#ifndef ABSTRACTDATABASEMODEL_H
 #define ABSTRACTDATABASEMODEL_H
 
 #include "sdk_global.h"
 #include <QAbstractItemModel>
 
 
-class SDKSHARED_EXPORT AbstractDatabaseModel : public QAbstractItemModel
+class SDKSHARED_EXPORT AbstractDatabaseModel : public QObject
 {
+    Q_OBJECT
 
 public:
-    AbstractDatabaseModel();
+    AbstractDatabaseModel(QObject * parent = nullptr);
 };
 
 #endif // ABSTRACTDATABASEMODEL_H

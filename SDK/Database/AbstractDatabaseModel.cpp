@@ -1,6 +1,8 @@
 #include "AbstractDatabaseModel.h"
 
 
-AbstractDatabaseModel::AbstractDatabaseModel()
+AbstractDatabaseModel::AbstractDatabaseModel(QObject * parent) :
+    QObject(parent)
 {
+
 }
