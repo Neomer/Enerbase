@@ -10,6 +10,15 @@
 *.dll
 *.dylib
 
+# VS files
+*.exp
+*.lib
+*.exe
+*.ilk
+*.obj
+*.pdb
+
+
 # Qt-es
 
 /.qmake.cache

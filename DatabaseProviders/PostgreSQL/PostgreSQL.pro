@@ -1,15 +1,20 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-07-24T09:10:06
+# Project created by QtCreator 2018-07-24T10:59:41
 #
 #-------------------------------------------------
 
 QT       -= gui
 
-TARGET = SDK
+TARGET = PostgreSQL.Provider
 TEMPLATE = lib
 
-DEFINES += SDK_LIBRARY
+DEPEND_MODULES += \
+        SDK
+
+
+
+DEFINES += POSTGRESQL_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -23,32 +28,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Database/AbstractDatabaseModel.cpp \
-    Database/AbstractDatabaseQuery.cpp \
-    Database/AbstractDatabaseProvider.cpp \
-    Exceptions/BaseException.cpp \
-    Database/DatabaseException.cpp \
-    Helpers/StringHelper.cpp \
-    Database/DatabaseConnectionRefusedException.cpp
+        PostgreSQLProvider.cpp \
+    PostgreSQLQuery.cpp
 
 HEADERS += \
-        sdk_global.h \ 
-    Database/AbstractDatabaseModel.h \
-    Serialization/IJsonSerializable.h \
-    Defines.h \
-    Database/AbstractDatabaseQuery.h \
-    Database/AbstractDatabaseProvider.h \
-    Exceptions/BaseException.h \
-    Database/DatabaseException.h \
-    Helpers/StringHelper.h \
-    BasicTypes.h \
-    Database/DatabaseConnectionRefusedException.h \
-    Database/AbstractConnectionStringProvider.h
+        PostgreSQLProvider.h \
+        postgresql_global.h \ 
+    PostgreSQLQuery.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-include(../paths.pri)
-include(../modules.pri)
+include(../../paths.pri)
+include(../../modules.pri)
+
+INCLUDEPATH += "C:/Program Files (x86)/PostgreSQL/10/include"
+LIBS += -L"C:/Program Files (x86)/PostgreSQL/10/lib" -l"libpq"

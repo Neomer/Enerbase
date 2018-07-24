@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     Configurator \
-    SDK
+    SDK \
+    DatabaseProviders/PostgreSQL

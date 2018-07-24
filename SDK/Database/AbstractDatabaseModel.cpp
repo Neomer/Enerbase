@@ -6,3 +6,8 @@ AbstractDatabaseModel::AbstractDatabaseModel(QObject * parent) :
 {
 
 }
+
+AbstractDatabaseModel::~AbstractDatabaseModel()
+{
+
+}

@@ -1,0 +1,31 @@
+#ifndef ABSTRACTDATABASEQUERY_H
+#define ABSTRACTDATABASEQUERY_H
+
+#include <QStringList>
+#include <QVariant>
+
+#include "../sdk_global.h"
+
+class SDKSHARED_EXPORT AbstractDatabaseQuery
+{
+public:
+    AbstractDatabaseQuery();
+    virtual ~AbstractDatabaseQuery();
+
+    virtual void close() = 0;
+
+    virtual bool first() = 0;
+    virtual bool last() = 0;
+    virtual bool next() = 0;
+    virtual bool prev() = 0;
+
+    virtual void fields(QStringList &result) = 0;
+
+    virtual int rowCount() = 0;
+    virtual int fieldsCount() = 0;
+
+    virtual QVariant value() = 0;
+
+};
+
+#endif // ABSTRACTDATABASEQUERY_H
