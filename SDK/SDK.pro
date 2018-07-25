@@ -29,7 +29,8 @@ SOURCES += \
     Exceptions/BaseException.cpp \
     Database/DatabaseException.cpp \
     Helpers/StringHelper.cpp \
-    Database/DatabaseConnectionRefusedException.cpp
+    Database/DatabaseConnectionRefusedException.cpp \
+    Helpers/DatabaseHelper.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -43,7 +44,8 @@ HEADERS += \
     Helpers/StringHelper.h \
     BasicTypes.h \
     Database/DatabaseConnectionRefusedException.h \
-    Database/AbstractConnectionStringProvider.h
+    Database/AbstractConnectionStringProvider.h \
+    Helpers/DatabaseHelper.h
 
 unix {
     target.path = /usr/lib

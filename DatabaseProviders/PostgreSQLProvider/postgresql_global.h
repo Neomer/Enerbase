@@ -1,0 +1,12 @@
+#ifndef POSTGRESQL_GLOBAL_H
+#define POSTGRESQL_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(POSTGRESQL_LIBRARY)
+#  define POSTGRESQLSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define POSTGRESQLSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // POSTGRESQL_GLOBAL_H

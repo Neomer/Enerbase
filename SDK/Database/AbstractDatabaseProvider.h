@@ -19,7 +19,7 @@ public:
     virtual void open(const AbstractConnectionStringProvider &connectionString) = 0;
     virtual void close() = 0;
 
-    virtual std::shared_ptr<AbstractDatabaseQuery> exec(const QStringView &sql, AbstractDatabaseQuery &query) = 0;
+    virtual std::shared_ptr<AbstractDatabaseQuery> exec(const QStringView &sql) = 0;
 };
 
 #endif // ABSTRACTDATABASEPROVIDER_H

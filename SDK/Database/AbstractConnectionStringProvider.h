@@ -1,8 +1,9 @@
 #ifndef ABSTRACTCONNECTIONSTRINGPROVIDER_H
 #define ABSTRACTCONNECTIONSTRINGPROVIDER_H
 
+#include <SDK/sdk_global.h>
 
-class AbstractConnectionStringProvider
+class SDKSHARED_EXPORT AbstractConnectionStringProvider
 {
 public:
     AbstractConnectionStringProvider() = default;
