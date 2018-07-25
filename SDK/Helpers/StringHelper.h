@@ -14,7 +14,8 @@ class SDKSHARED_EXPORT StringHelper
     SINGLETON(StringHelper)
 
 public:
-    static const char *StringToConstChar(const QStringView &data);
+    static void StringToConstChar(const QString &data, char *buffer);
+    static void StringToConstChar(const QStringView &data, char *buffer);
     static void GetRandomString(QString &data, i16 size);
 
 private:

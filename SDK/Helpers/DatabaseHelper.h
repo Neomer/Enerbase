@@ -8,6 +8,7 @@
 #include <SDK/BasicTypes.h>
 
 #include <SDK/Database/AbstractDatabaseProvider.h>
+#include <SDK/Exceptions/NotNullException.h>
 
 class SDKSHARED_EXPORT DatabaseHelper
 {
@@ -16,6 +17,8 @@ class SDKSHARED_EXPORT DatabaseHelper
 public:
     void registerProvider(AbstractDatabaseProvider *provider, bool isActive = true);
     AbstractDatabaseProvider *getActiveProvider();
+    AbstractDatabaseProvider *getActiveProviderNotNull();
+    void unregisterAll();
 
 private:
     QVector<AbstractDatabaseProvider *> _providers;

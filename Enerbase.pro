@@ -3,4 +3,5 @@ TEMPLATE = subdirs
 SUBDIRS += \
     Configurator \
     SDK \
-    DatabaseProviders/PostgreSQLProvider
+    DatabaseProviders/PostgreSQLProvider \
+    SDK_Tests

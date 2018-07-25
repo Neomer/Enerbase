@@ -1,8 +1,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define INTERFACE(classname)                    public: virtual ~##classname() { }
-
 #define PROP(type, name)        private: type _##name; \
                                 public: type get##name() const { return _##name; } \
                                 void set##name(type value) { _##name = value; }

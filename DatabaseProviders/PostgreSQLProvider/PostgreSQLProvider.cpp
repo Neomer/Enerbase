@@ -1,3 +1,6 @@
+#include <libpq-fe.h>
+#include <QDebug>
+
 #include "PostgreSQLProvider.h"
 #include <SDK/Helpers/StringHelper.h>
 
@@ -10,11 +13,13 @@ PostgreSQLProvider::PostgreSQLProvider() :
 
 void PostgreSQLProvider::open(const AbstractConnectionStringProvider &connectionString)
 {
-    _connection = PQconnectdb(StringHelper::StringToConstChar(connectionString.toString()));
-
-    if (PQstatus(_connection) == CONNECTION_BAD)
+    auto cstr = connectionString.toString();
+    char cs[cstr.length()];
+    StringHelper::StringToConstChar(cstr, cs);
+    _connection = PQconnectdb(cs);
+    if (PQstatus((const PGconn *) _connection) == CONNECTION_BAD)
     {
-        throw DatabaseConnectionRefusedException(connectionString, this, QString("Connection failed!"));
+        throw DatabaseConnectionRefusedException(connectionString, this, PQerrorMessage((const PGconn *) _connection));
     }
 }
 
@@ -25,15 +30,14 @@ void PostgreSQLProvider::close()
         throw DatabaseException(this, "Trying to close already closed connection!");
     }
 
-    PQfinish(_connection);
+    PQfinish((PGconn *)_connection);
 }
 
-std::shared_ptr<AbstractDatabaseQuery> PostgreSQLProvider::exec(const QStringView &sql)
+std::shared_ptr<AbstractDatabaseQuery> PostgreSQLProvider::exec(const char *sql)
 {
     if (_connection == nullptr)
     {
         throw DatabaseException(this, "Connection is closed!");
     }
-
-    return std::shared_ptr<AbstractDatabaseQuery>(new PostgreSQLQuery(PQexec(_connection, StringHelper::StringToConstChar(sql))));
+    return std::shared_ptr<AbstractDatabaseQuery>(new PostgreSQLQuery(PQexec((PGconn*)_connection, sql)));
 }

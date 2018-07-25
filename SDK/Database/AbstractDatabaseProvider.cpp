@@ -1,4 +1,5 @@
 #include "AbstractDatabaseProvider.h"
+#include <Helpers/StringHelper.h>
 
 AbstractDatabaseProvider::AbstractDatabaseProvider()
 {
@@ -18,4 +19,11 @@ AbstractDatabaseProvider &AbstractDatabaseProvider::operator =(const AbstractDat
 AbstractDatabaseProvider::~AbstractDatabaseProvider()
 {
 
+}
+
+std::shared_ptr<AbstractDatabaseQuery> AbstractDatabaseProvider::exec(const QStringView &sql)
+{
+    char cs[sql.length()];
+    StringHelper::StringToConstChar(sql, cs);
+    return exec(cs);
 }

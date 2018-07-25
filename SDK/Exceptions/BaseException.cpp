@@ -1,34 +1,21 @@
 #include "BaseException.h"
 
 BaseException::BaseException() :
-    QException()
+    std::exception()
 {
 
 }
 
 BaseException::BaseException(QString message) :
-    _message(message)
+    std::exception(),
+    _message(message.toStdString())
 {
 
 }
 
 BaseException::BaseException(const char *message) :
+    std::exception(),
     _message(message)
 {
 
-}
-
-QString BaseException::getMessage()
-{
-    return _message;
-}
-
-void BaseException::raise() const
-{
-
-}
-
-QException *BaseException::clone() const
-{
-    return new BaseException();
 }
