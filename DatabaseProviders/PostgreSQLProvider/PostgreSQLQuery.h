@@ -5,11 +5,13 @@
 
 #include "postgresql_global.h"
 #include <SDK/Database/AbstractDatabaseQuery.h>
+#include <SDK/Database/DatabaseQueryBaseException.h>
+#include <SDK/Database/AbstractDatabaseProvider.h>
 
 class POSTGRESQLSHARED_EXPORT PostgreSQLQuery : public AbstractDatabaseQuery
 {
 public:
-    PostgreSQLQuery(PGresult *result);
+    PostgreSQLQuery(const AbstractDatabaseProvider *provider, PGresult *result);
 
     // AbstractDatabaseQuery interface
 public:
@@ -22,9 +24,11 @@ public:
     virtual int rowCount() override;
     virtual int fieldsCount() override;
     virtual QVariant value() override;
+    virtual bool isValid() override;
+    virtual bool isEmpty() override;
 
 private:
     PGresult *_result;
-};
+ };
 
 #endif // POSTGRESQLQUERY_H

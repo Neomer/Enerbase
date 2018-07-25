@@ -39,5 +39,5 @@ std::shared_ptr<AbstractDatabaseQuery> PostgreSQLProvider::exec(const char *sql)
     {
         throw DatabaseException(this, "Connection is closed!");
     }
-    return std::shared_ptr<AbstractDatabaseQuery>(new PostgreSQLQuery(PQexec((PGconn*)_connection, sql)));
+    return std::shared_ptr<AbstractDatabaseQuery>(new PostgreSQLQuery(this, PQexec((PGconn*)_connection, sql)));
 }

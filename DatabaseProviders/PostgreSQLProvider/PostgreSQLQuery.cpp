@@ -1,10 +1,15 @@
 #include "PostgreSQLQuery.h"
 
-PostgreSQLQuery::PostgreSQLQuery(PGresult *result) :
+PostgreSQLQuery::PostgreSQLQuery(const AbstractDatabaseProvider *provider, PGresult *result) :
     AbstractDatabaseQuery(),
     _result(result)
 {
-
+    if (PQresultStatus(result) == PGRES_BAD_RESPONSE ||
+        PQresultStatus(result) == PGRES_NONFATAL_ERROR ||
+        PQresultStatus(result) == PGRES_FATAL_ERROR)
+    {
+        throw DatabaseQueryBaseException(provider, PQresultErrorMessage(result));
+    }
 }
 
 void PostgreSQLQuery::close()
@@ -39,7 +44,7 @@ void PostgreSQLQuery::fields(QStringList &result)
 
 int PostgreSQLQuery::rowCount()
 {
-    return 0;
+    return PQntuples(_result);
 }
 
 int PostgreSQLQuery::fieldsCount()
@@ -50,4 +55,14 @@ int PostgreSQLQuery::fieldsCount()
 QVariant PostgreSQLQuery::value()
 {
     return QVariant();
+}
+
+bool PostgreSQLQuery::isValid()
+{
+
+}
+
+bool PostgreSQLQuery::isEmpty()
+{
+    return PQresultStatus(_result) == PGRES_EMPTY_QUERY;
 }

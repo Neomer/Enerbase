@@ -32,7 +32,8 @@ SOURCES += \
     Database/DatabaseConnectionRefusedException.cpp \
     Helpers/DatabaseHelper.cpp \
     Exceptions/EmptyListReadException.cpp \
-    Exceptions/NotNullException.cpp
+    Exceptions/NotNullException.cpp \
+    Database/DatabaseQueryBaseException.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -49,7 +50,8 @@ HEADERS += \
     Database/AbstractConnectionStringProvider.h \
     Helpers/DatabaseHelper.h \
     Exceptions/EmptyListReadException.h \
-    Exceptions/NotNullException.h
+    Exceptions/NotNullException.h \
+    Database/DatabaseQueryBaseException.h
 
 unix {
     target.path = /usr/lib

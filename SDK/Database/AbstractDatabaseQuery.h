@@ -26,6 +26,8 @@ public:
 
     virtual QVariant value() = 0;
 
+    virtual bool isValid() = 0;
+    virtual bool isEmpty() { return rowCount() == 0; }
 };
 
 #endif // ABSTRACTDATABASEQUERY_H
