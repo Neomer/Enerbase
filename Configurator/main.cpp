@@ -31,7 +31,9 @@ int main(int argc, char *argv[])
     try
     {
         auto provider = DatabaseHelper::Instance().getActiveProviderNotNull();
-        auto query = provider->exec("select * from Test;");
+        auto query = provider->exec("select * from \"Enerbase\".\"Test\";");
+
+        qDebug() << "Rows:" << query->rowCount();
     }
     catch (NotNullException &)
     {
