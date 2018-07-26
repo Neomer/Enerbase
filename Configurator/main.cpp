@@ -9,58 +9,73 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-
-    PostgreSQLConnectionStringProvider cs;
-    cs.setHost("127.0.0.1");
-    cs.setPort(5432);
-    cs.setUsername("postgres");
-    cs.setPassword("123456");
-    cs.setDatabase("Enerbase");
-    auto p = new PostgreSQLProvider();
     try
     {
-        p->open(cs);
-        DatabaseHelper::Instance().registerProvider(p);
-    }
-    catch (DatabaseConnectionRefusedException &ex)
-    {
-        qDebug() << "Database connection refused!" << ex.what();
-        delete p;
-    }
 
-    try
-    {
-        auto provider = DatabaseHelper::Instance().getActiveProviderNotNull();
-        auto query = provider->exec("select * from \"Enerbase\".\"Test\";");
-        qDebug() << "Rows:" << query->rowCount();
-
-        QStringList flist;
-        query->fields(flist);
-        qDebug() << flist;
+        QApplication a(argc, argv);
 
         try
         {
-            foreach (auto f, flist)
+            PostgreSQLConnectionStringProvider cs;
+            cs.setHost("127.0.0.1");
+            cs.setPort(5432);
+            cs.setUsername("postgres");
+            cs.setPassword("123456");
+            cs.setDatabase("Enerbase");
+            auto p = new PostgreSQLProvider();
+            try
             {
-                qDebug() << "Value [" << f << "]:" << query->value(f);
+                p->open(cs);
+                DatabaseHelper::Instance().registerProvider(p);
+            }
+            catch (DatabaseConnectionRefusedException &ex)
+            {
+                qDebug() << "Database connection refused!" << ex.what();
+                delete p;
+            }
+
+            try
+            {
+                auto provider = DatabaseHelper::Instance().getActiveProviderNotNull();
+                auto query = provider->exec("select * from \"Enerbase\".\"Test\";");
+                qDebug() << "Rows:" << query->rowCount();
+
+                QStringList flist;
+                query->fields(flist);
+                qDebug() << flist;
+
+                try
+                {
+                    foreach (auto f, flist)
+                    {
+                        qDebug() << "Value [" << f << "]:" << query->value(f);
+                    }
+                }
+                catch (OutOfRangeException &)
+                {
+                    qDebug() << "Column not found!";
+                }
+            }
+            catch (NotNullException &)
+            {
+
             }
         }
-        catch (OutOfRangeException &)
+        catch (DatabaseException &ex)
         {
-            qDebug() << "Column not found!";
+            qDebug() << "Database exception!" << ex.what();
         }
+
+        MainWindow w;
+        w.show();
+
+        auto result = a.exec();
+
+        DatabaseHelper::Instance().unregisterAll();
     }
-    catch (NotNullException &)
+    catch (BaseException &ex)
     {
-
+        printf("Exception: %s", ex.what());
+        return -1;
     }
-
-
-    MainWindow w;
-    w.show();
-
-    auto result = a.exec();
-
-    DatabaseHelper::Instance().unregisterAll();
 }

@@ -1,6 +1,7 @@
 //#include <catalog/pg_type.h>
 
 #include <QUuid>
+#include <QDateTime>
 
 #include <SDK/Helpers/StringHelper.h>
 #include <SDK/Exceptions/OutOfRangeException.h>
@@ -140,11 +141,23 @@ void PostgreSQLQuery::getFormattedValue(const char *c_value, Oid type_id, QVaria
             break;
 
         case 1082: // DATEOID
+            value = QVariant::fromValue(QDateTime::fromString(s, "yyyy-MM-dd"));
+            break;
+
         case 1083: // TIMEOID
+            value = QVariant::fromValue(QDateTime::fromString(s, "hh:mm:ss"));
+            break;
+
         case 1114: // TIMESTAMPOID
-        case 1184: // TIMESTAMPTZOID
-        case 1187: // INTERVALOID
+            value = QVariant::fromValue(QDateTime::fromString(s, "yyyy-MM-dd hh:mm:ss"));
+            break;
+
         case 1270: // TIMETZOID
+        case 1184: // TIMESTAMPTZOID
+            throw DatabaseException(_provider, QString("Fields types with timezone is unsupported yet!"));
+
+        case 1187: // INTERVALOID
+            value = QVariant::fromValue(QDateTime::fromString(s, "hh:mm:ss"));
             break;
 
         default:

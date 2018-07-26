@@ -4,6 +4,7 @@
 #include <QString>
 #include <QStringView>
 #include <QRandomGenerator>
+#include <QDateTime>
 
 #include <SDK/sdk_global.h>
 #include <SDK/Defines.h>
@@ -19,7 +20,7 @@ public:
 
     static i32 StringLength(const QStringView &data);
 
-    static void GetRandomString(QString &data, i16 size);
+    void GetRandomString(QString &data, i16 size);
 
 private:
     QRandomGenerator _randomGenerator;
