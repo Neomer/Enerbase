@@ -24,7 +24,7 @@ PostgreSQLQuery::PostgreSQLQuery(const AbstractDatabaseProvider *provider, PGres
 
 void PostgreSQLQuery::close()
 {
-
+    PQclear(_result);
 }
 
 void PostgreSQLQuery::fields(QStringList &result)

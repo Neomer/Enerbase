@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
                 {
                     qDebug() << "Column not found!";
                 }
+                query->close();
             }
             catch (NotNullException &)
             {
