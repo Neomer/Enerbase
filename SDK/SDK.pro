@@ -38,7 +38,9 @@ SOURCES += \
     Exceptions/OutOfRangeException.cpp \
     Exceptions/DataFormatException.cpp \
     Model/AbstractEntity.cpp \
-    Helpers/EntityHelper.cpp
+    Helpers/EntityHelper.cpp \
+    Model/EntityBaseException.cpp \
+    Model/PropertyReadWriteException.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -61,7 +63,9 @@ HEADERS += \
     Exceptions/OutOfRangeException.h \
     Exceptions/DataFormatException.h \
     Model/AbstractEntity.h \
-    Helpers/EntityHelper.h
+    Helpers/EntityHelper.h \
+    Model/EntityBaseException.h \
+    Model/PropertyReadWriteException.h
 
 unix {
     target.path = /usr/lib

@@ -18,6 +18,7 @@ public:
     virtual void close() override;
     virtual void fields(QStringList &result) const override;
     virtual int rowCount() const override;
+    virtual bool hasField(const char *name) const override;
     virtual i32 field(const char *name) const override;
     virtual int fieldsCount() const override;
     virtual QVariant value(int index) const override;

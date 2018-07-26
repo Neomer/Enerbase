@@ -12,7 +12,7 @@ class EntityHelper
     SINGLETON(EntityHelper)
 
 public:
-    void Load(const AbstractDatabaseQuery *query, AbstractEntity *entity);
+    void Load(const AbstractDatabaseQuery *query, AbstractEntity *entity) const;
 };
 
 #endif // ENTITYHELPER_H

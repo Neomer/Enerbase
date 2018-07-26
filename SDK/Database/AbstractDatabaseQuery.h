@@ -22,6 +22,7 @@ public:
 
     virtual bool isEnd() const = 0;
 
+    virtual bool hasField(const char *name) const = 0;
     virtual i32 field(const char *name) const = 0;
     virtual void fields(QStringList &result) const = 0;
 

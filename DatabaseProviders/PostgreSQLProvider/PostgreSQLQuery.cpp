@@ -40,6 +40,11 @@ int PostgreSQLQuery::rowCount() const
     return PQntuples(_result);
 }
 
+bool PostgreSQLQuery::hasField(const char *name) const
+{
+    return field(name) >= 0;
+}
+
 i32 PostgreSQLQuery::field(const char *name) const
 {
     auto result = PQfnumber(_result, name);
