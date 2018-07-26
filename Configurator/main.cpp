@@ -6,12 +6,15 @@
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLConnectionStringProvider.h>
 #include <SDK/Helpers/DatabaseHelper.h>
 #include <SDK/Exceptions/OutOfRangeException.h>
+#include <SDK/Helpers/EntityHelper.h>
+#include <SDK/Model/PropertyReadWriteException.h>
+
+#include "TestEntity.h"
 
 int main(int argc, char *argv[])
 {
     try
     {
-
         QApplication a(argc, argv);
 
         try
@@ -44,16 +47,15 @@ int main(int argc, char *argv[])
                 query->fields(flist);
                 qDebug() << flist;
 
+                TestEntity ent;
+
                 try
                 {
-                    foreach (auto f, flist)
-                    {
-                        qDebug() << "Value [" << f << "]:" << query->value(f);
-                    }
+                    EntityHelper::Instance().Load(query.get(), &ent);
                 }
-                catch (OutOfRangeException &)
+                catch (PropertyReadWriteException &ex)
                 {
-                    qDebug() << "Column not found!";
+                    qDebug() << "Property write exception:" << ex.getPropertyName();
                 }
                 query->close();
             }

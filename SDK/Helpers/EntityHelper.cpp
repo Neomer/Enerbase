@@ -3,6 +3,7 @@
 
 #include <SDK/Exceptions/DataFormatException.h>
 #include <SDK/Model/PropertyReadWriteException.h>
+#include <SDK/Exceptions/OutOfRangeException.h>
 
 #include "EntityHelper.h"
 
@@ -37,6 +38,10 @@ void EntityHelper::Load(const AbstractDatabaseQuery *query, AbstractEntity *enti
             {
                 throw PropertyReadWriteException(entity, metaProperty.name());
             }
+        }
+        catch (OutOfRangeException &)
+        {
+            continue;
         }
         catch (DataFormatException &)
         {

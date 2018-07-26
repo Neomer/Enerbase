@@ -9,7 +9,7 @@
 #include <SDK/Database/AbstractDatabaseQuery.h>
 
 
-class AbstractEntity :
+class SDKSHARED_EXPORT AbstractEntity :
         public QObject
 {
     Q_OBJECT

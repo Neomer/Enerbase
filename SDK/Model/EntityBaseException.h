@@ -11,6 +11,8 @@ public:
     EntityBaseException(const AbstractEntity *entity, const char *message);
     EntityBaseException(const AbstractEntity *entity, QString message);
 
+    const AbstractEntity *getEntity() { return _entity; }
+
 private:
     const AbstractEntity *_entity;
 };

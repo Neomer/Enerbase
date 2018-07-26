@@ -7,7 +7,7 @@
 #include <SDK/Database/AbstractDatabaseProvider.h>
 #include <SDK/Model/AbstractEntity.h>
 
-class EntityHelper
+class SDKSHARED_EXPORT EntityHelper
 {
     SINGLETON(EntityHelper)
 

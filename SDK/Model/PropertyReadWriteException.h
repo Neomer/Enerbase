@@ -12,6 +12,8 @@ public:
     PropertyReadWriteException(const AbstractEntity *entity, QString propertyName, const char *message);
     PropertyReadWriteException(const AbstractEntity *entity, QString propertyName, QString message);
 
+    const QString & getPropertyName() { return _propertyName; }
+
 private:
     QString _propertyName;
 };
