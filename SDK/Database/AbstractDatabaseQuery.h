@@ -19,12 +19,16 @@ public:
     virtual bool next() = 0;
     virtual bool prev() = 0;
 
+    virtual bool isEnd() = 0;
+
     virtual void fields(QStringList &result) = 0;
 
     virtual int rowCount() = 0;
     virtual int fieldsCount() = 0;
 
-    virtual QVariant value() = 0;
+    virtual QVariant value(int index) = 0;
+    virtual QVariant value(const char *name) = 0;
+    virtual QVariant value(QString name);
 
     virtual bool isValid() = 0;
     virtual bool isEmpty() { return rowCount() == 0; }
