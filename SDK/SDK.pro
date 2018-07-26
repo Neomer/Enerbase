@@ -34,7 +34,9 @@ SOURCES += \
     Exceptions/EmptyListReadException.cpp \
     Exceptions/NotNullException.cpp \
     Database/DatabaseQueryBaseException.cpp \
-    Database/BaseDatabaseQuery.cpp
+    Database/BaseDatabaseQuery.cpp \
+    Exceptions/OutOfRangeException.cpp \
+    Exceptions/DataFormatException.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -53,7 +55,9 @@ HEADERS += \
     Exceptions/EmptyListReadException.h \
     Exceptions/NotNullException.h \
     Database/DatabaseQueryBaseException.h \
-    Database/BaseDatabaseQuery.h
+    Database/BaseDatabaseQuery.h \
+    Exceptions/OutOfRangeException.h \
+    Exceptions/DataFormatException.h
 
 unix {
     target.path = /usr/lib

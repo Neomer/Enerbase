@@ -5,7 +5,6 @@
 #include <exception>
 #include "../sdk_global.h"
 
-
 class SDKSHARED_EXPORT BaseException : public std::exception
 {
 public:

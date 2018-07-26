@@ -18,6 +18,7 @@ public:
     virtual void close() override;
     virtual void fields(QStringList &result) override;
     virtual int rowCount() override;
+    virtual i32 field(const char *name) override;
     virtual int fieldsCount() override;
     virtual QVariant value(int index) override;
     virtual QVariant value(const char *name) override;
@@ -26,6 +27,9 @@ public:
 
 private:
     PGresult *_result;
+    const AbstractDatabaseProvider *_provider;
+
+    void getFormattedValue(const char *c_value, Oid type_id, QVariant &value);
  };
 
 #endif // POSTGRESQLQUERY_H

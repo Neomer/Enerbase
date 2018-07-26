@@ -4,6 +4,7 @@
 #include <QStringList>
 #include <QVariant>
 
+#include <BasicTypes.h>
 #include "../sdk_global.h"
 
 class SDKSHARED_EXPORT AbstractDatabaseQuery
@@ -21,6 +22,7 @@ public:
 
     virtual bool isEnd() = 0;
 
+    virtual i32 field(const char *name) = 0;
     virtual void fields(QStringList &result) = 0;
 
     virtual int rowCount() = 0;

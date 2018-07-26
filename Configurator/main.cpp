@@ -5,6 +5,7 @@
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLProvider.h>
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLConnectionStringProvider.h>
 #include <SDK/Helpers/DatabaseHelper.h>
+#include <SDK/Exceptions/OutOfRangeException.h>
 
 int main(int argc, char *argv[])
 {
@@ -32,8 +33,23 @@ int main(int argc, char *argv[])
     {
         auto provider = DatabaseHelper::Instance().getActiveProviderNotNull();
         auto query = provider->exec("select * from \"Enerbase\".\"Test\";");
-
         qDebug() << "Rows:" << query->rowCount();
+
+        QStringList flist;
+        query->fields(flist);
+        qDebug() << flist;
+
+        try
+        {
+            foreach (auto f, flist)
+            {
+                qDebug() << "Value [" << f << "]:" << query->value(f);
+            }
+        }
+        catch (OutOfRangeException &)
+        {
+            qDebug() << "Column not found!";
+        }
     }
     catch (NotNullException &)
     {
