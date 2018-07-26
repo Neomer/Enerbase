@@ -20,20 +20,20 @@ public:
     virtual bool next() = 0;
     virtual bool prev() = 0;
 
-    virtual bool isEnd() = 0;
+    virtual bool isEnd() const = 0;
 
-    virtual i32 field(const char *name) = 0;
-    virtual void fields(QStringList &result) = 0;
+    virtual i32 field(const char *name) const = 0;
+    virtual void fields(QStringList &result) const = 0;
 
-    virtual int rowCount() = 0;
-    virtual int fieldsCount() = 0;
+    virtual int rowCount() const = 0;
+    virtual int fieldsCount() const = 0;
 
-    virtual QVariant value(int index) = 0;
-    virtual QVariant value(const char *name) = 0;
-    virtual QVariant value(QString name);
+    virtual QVariant value(int index) const = 0;
+    virtual QVariant value(const char *name) const = 0;
+    virtual QVariant value(QString name) const;
 
-    virtual bool isValid() = 0;
-    virtual bool isEmpty() { return rowCount() == 0; }
+    virtual bool isValid() const = 0;
+    virtual bool isEmpty() const { return rowCount() == 0; }
 };
 
 #endif // ABSTRACTDATABASEQUERY_H

@@ -16,20 +16,20 @@ public:
     // AbstractDatabaseQuery interface
 public:
     virtual void close() override;
-    virtual void fields(QStringList &result) override;
-    virtual int rowCount() override;
-    virtual i32 field(const char *name) override;
-    virtual int fieldsCount() override;
-    virtual QVariant value(int index) override;
-    virtual QVariant value(const char *name) override;
-    virtual bool isValid() override;
-    virtual bool isEmpty() override;
+    virtual void fields(QStringList &result) const override;
+    virtual int rowCount() const override;
+    virtual i32 field(const char *name) const override;
+    virtual int fieldsCount() const override;
+    virtual QVariant value(int index) const override;
+    virtual QVariant value(const char *name) const override;
+    virtual bool isValid() const override;
+    virtual bool isEmpty() const override;
 
 private:
     PGresult *_result;
     const AbstractDatabaseProvider *_provider;
 
-    void getFormattedValue(const char *c_value, Oid type_id, QVariant &value);
+    void getFormattedValue(const char *c_value, Oid type_id, QVariant &value) const;
  };
 
 #endif // POSTGRESQLQUERY_H

@@ -36,7 +36,9 @@ SOURCES += \
     Database/DatabaseQueryBaseException.cpp \
     Database/BaseDatabaseQuery.cpp \
     Exceptions/OutOfRangeException.cpp \
-    Exceptions/DataFormatException.cpp
+    Exceptions/DataFormatException.cpp \
+    Model/AbstractEntity.cpp \
+    Helpers/EntityHelper.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -57,7 +59,9 @@ HEADERS += \
     Database/DatabaseQueryBaseException.h \
     Database/BaseDatabaseQuery.h \
     Exceptions/OutOfRangeException.h \
-    Exceptions/DataFormatException.h
+    Exceptions/DataFormatException.h \
+    Model/AbstractEntity.h \
+    Helpers/EntityHelper.h
 
 unix {
     target.path = /usr/lib

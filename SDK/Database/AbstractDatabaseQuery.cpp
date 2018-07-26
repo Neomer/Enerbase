@@ -11,7 +11,7 @@ AbstractDatabaseQuery::~AbstractDatabaseQuery()
 
 }
 
-QVariant AbstractDatabaseQuery::value(QString name)
+QVariant AbstractDatabaseQuery::value(QString name) const
 {
     char c_name[StringHelper::StringLength(name)];
     StringHelper::StringToConstChar(name, c_name);
