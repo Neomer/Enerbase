@@ -4,13 +4,14 @@
 #include <memory>
 
 #include "postgresql_global.h"
-#include <Database/AbstractDatabaseProvider.h>
-#include <Database/DatabaseConnectionRefusedException.h>
+#include <SDK/Database/AbstractDatabaseProvider.h>
+#include <SDK/Database/DatabaseConnectionRefusedException.h>
 
 class POSTGRESQLSHARED_EXPORT PostgreSQLProvider : public AbstractDatabaseProvider
 {
 public:
     PostgreSQLProvider();
+    ~PostgreSQLProvider();
 
     // AbstractDatabaseProvider interface
 public:
@@ -21,6 +22,11 @@ public:
 
 private:
     void *_connection;
+    AbstractDatabaseFormatter *_formater;
+
+    // AbstractDatabaseProvider interface
+public:
+    virtual const AbstractDatabaseFormatter *getFormatter() const override;
 };
 
 #endif // POSTGRESQLPROVIDER_H

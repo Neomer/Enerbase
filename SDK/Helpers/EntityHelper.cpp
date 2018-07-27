@@ -59,9 +59,9 @@ void EntityHelper::GetFields(const AbstractEntity *entity, QStringList &fields, 
     GetFieldsPrivate(entity->metaObject(), fields, quote, recursievly);
 }
 
-void EntityHelper::GetProperties(const AbstractEntity *entity, QVector<QPair<QString, QVariant> > &properties)
+void EntityHelper::GetProperties(const AbstractEntity *entity, PropertyList &properties)
 {
-
+    GetPropertiesPrivate(entity, entity->metaObject(), properties);
 }
 
 void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider) const
@@ -110,7 +110,7 @@ void EntityHelper::GetFieldsPrivate(const QMetaObject *metaObject, QStringList &
 
 }
 
-void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, QVector<QPair<QString, QVariant> > &properties)
+void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, PropertyList &properties)
 {
     if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
     {
@@ -128,6 +128,6 @@ void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMet
         {
             continue;
         }
-        properties << QPair<QString, QString>(metaProperty.name(), metaProperty.read(entity));
+        properties << QPair<QString, QVariant>(QString(metaProperty.name()), metaProperty.read(entity));
     }
 }

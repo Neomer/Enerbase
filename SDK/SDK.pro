@@ -42,7 +42,9 @@ SOURCES += \
     Model/EntityBaseException.cpp \
     Model/PropertyReadWriteException.cpp \
     Model/AbstractIdentifiedEntity.cpp \
-    Exceptions/NotFoundException.cpp
+    Exceptions/NotFoundException.cpp \
+    Database/AbstractDatabaseFormatter.cpp \
+    Database/DefaultDatabaseFormatter.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -69,7 +71,9 @@ HEADERS += \
     Model/EntityBaseException.h \
     Model/PropertyReadWriteException.h \
     Model/AbstractIdentifiedEntity.h \
-    Exceptions/NotFoundException.h
+    Exceptions/NotFoundException.h \
+    Database/AbstractDatabaseFormatter.h \
+    Database/DefaultDatabaseFormatter.h
 
 unix {
     target.path = /usr/lib

@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "AbstractIdentifiedEntity.h"
 #include <SDK/Helpers/EntityHelper.h>
 #include <SDK/Exceptions/NotFoundException.h>
@@ -28,13 +30,15 @@ void AbstractIdentifiedEntity::getById(const QUuid &id, const AbstractDatabasePr
 
 void AbstractIdentifiedEntity::save(const AbstractDatabaseProvider *provider)
 {
-    if (isNew())
-    {
-        QStringList fields;
-        EntityHelper::Instance().GetFields(this, fields, '"');
+    EntityHelper::PropertyList prop;
+    EntityHelper::Instance().GetProperties(this, prop);
 
-        QString sql("insert into \"Enerbase\".\"" + QString(getTableName()) + "\" (" + fields.join(',') + ") values ();");
-        qDebug() << sql;
+    if (!isNew())
+    {
+        for (int i = 0; i < prop.count(); ++i)
+        {
+            auto p = prop.at(i);
+        }
     }
     else
     {

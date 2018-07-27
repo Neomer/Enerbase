@@ -10,7 +10,7 @@ class SDKSHARED_EXPORT AbstractIdentifiedEntity : public AbstractEntity
 {
     Q_OBJECT
 
-    Q_PROPERTY(QUuid Id READ getId WRITE setId NOTIFY IdChanged STORED true)
+    Q_PROPERTY(QUuid Id READ getId WRITE setId NOTIFY IdChanged STORED true FINAL)
 
     QUuid m_Id;
 

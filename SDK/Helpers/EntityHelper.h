@@ -16,6 +16,8 @@ class SDKSHARED_EXPORT EntityHelper
     SINGLETON(EntityHelper)
 
 public:
+    using PropertyList = QVector< QPair< QString, QVariant > >;
+
     ///
     /// \brief Load Заполняет значения свойств сущности результатом запроса к БД
     /// \param query (in) результат запроса к БД
@@ -36,13 +38,13 @@ public:
     /// \param entity (in) сущность
     /// \param properties (out) список значений
     ///
-    void GetProperties(const AbstractEntity *entity, QVector< QPair< QString, QVariant > > &properties);
+    void GetProperties(const AbstractEntity *entity, PropertyList &properties);
 
     void GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider) const;
 
 private:
     void GetFieldsPrivate(const QMetaObject *metaObject, QStringList &fields, char quote = 0, bool recursievly = true) const;
-    void GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, QVector< QPair< QString, QVariant > > &properties);
+    void GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, PropertyList &properties);
 
 };
 
