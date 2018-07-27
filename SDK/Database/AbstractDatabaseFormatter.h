@@ -9,8 +9,9 @@ class AbstractDatabaseFormatter
 public:
     AbstractDatabaseFormatter();
 
-    virtual QString getFormattedFieldName(const QString &fieldname) = 0;
-    virtual QString getFormattedValue(const QVariant &value) = 0;
+    virtual QString getFormattedTableName(const QString &tablename) const = 0;
+    virtual QString getFormattedFieldName(const QString &fieldname) const = 0;
+    virtual QString getFormattedValue(const QVariant &value) const = 0;
 };
 
 #endif // ABSTRACTDATABASEFORMATTER_H

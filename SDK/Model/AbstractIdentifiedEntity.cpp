@@ -18,7 +18,11 @@ QUuid AbstractIdentifiedEntity::getId() const
 
 void AbstractIdentifiedEntity::getById(const QUuid &id, const AbstractDatabaseProvider *provider)
 {
-    auto result = provider->exec(QString("select * from \"Enerbase\".\"" + QString(getTableName()) + "\" where \"Id\"='" + id.toString() + "' limit 1;"));
+    auto result = provider->exec(QString("select * from %1.%2 where %3=%4 limit 1;").arg(
+                                         provider->getFormatter()->getFormattedTableName(QString("Enerbase")),
+                                         provider->getFormatter()->getFormattedTableName(QString(getTableName())),
+                                         provider->getFormatter()->getFormattedFieldName("Id"),
+                                         provider->getFormatter()->getFormattedValue(id)));
     if (result->isEmpty())
     {
         throw NotFoundException();
@@ -33,16 +37,40 @@ void AbstractIdentifiedEntity::save(const AbstractDatabaseProvider *provider)
     EntityHelper::PropertyList prop;
     EntityHelper::Instance().GetProperties(this, prop);
 
-    if (!isNew())
+    QString sql;
+
+    if (isNew())
     {
         for (int i = 0; i < prop.count(); ++i)
         {
             auto p = prop.at(i);
+
         }
     }
     else
     {
+        QString values;
+        for (int i = 0; i < prop.count() - 1; ++i)
+        {
+            auto p = prop.at(i);
+            values.append(QString("%1=%2,").arg(
+                              provider->getFormatter()->getFormattedFieldName(p.first),
+                              provider->getFormatter()->getFormattedValue(p.second)));
+        }
+        values.append(QString("%1=%2").arg(
+                          provider->getFormatter()->getFormattedFieldName(prop.at(prop.count() - 1).first),
+                          provider->getFormatter()->getFormattedValue(prop.at(prop.count() - 1).second)));
+        sql = QString("update %1.%2 set %3 where %4=%5;").arg(
+                provider->getFormatter()->getFormattedTableName("Enerbase"),
+                provider->getFormatter()->getFormattedTableName(getTableName()),
+                values,
+                provider->getFormatter()->getFormattedFieldName("Id"),
+                provider->getFormatter()->getFormattedValue(getId()));
+    }
 
+    if (!sql.isEmpty())
+    {
+        provider->exec(sql);
     }
 }
 

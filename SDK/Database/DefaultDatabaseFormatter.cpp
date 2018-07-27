@@ -7,12 +7,12 @@ DefaultDatabaseFormatter::DefaultDatabaseFormatter()
 
 }
 
-QString DefaultDatabaseFormatter::getFormattedFieldName(const QString &fieldname)
+QString DefaultDatabaseFormatter::getFormattedFieldName(const QString &fieldname)const
 {
     return QString("\"") + fieldname + "\"";
 }
 
-QString DefaultDatabaseFormatter::getFormattedValue(const QVariant &value)
+QString DefaultDatabaseFormatter::getFormattedValue(const QVariant &value)const
 {
     switch (value.type())
     {
@@ -23,13 +23,13 @@ QString DefaultDatabaseFormatter::getFormattedValue(const QVariant &value)
             return value.toString();
 
         case QVariant::DateTime:
-            return value.toDateTime().toString("'yyyy-MM-dd hh:mm:ss'");
+            return value.toDateTime().toString("\"\"yyyy-MM-dd hh:mm:ss\"\"").replace("\"\"", "'");
 
         case QVariant::Date:
-            return value.toDate().toString("'yyyy-MM-dd'");
+            return value.toDate().toString("\'yyyy-MM-dd\'");
 
         case QVariant::Time:
-            return value.toDate().toString("'hh:mm:ss'");
+            return value.toDate().toString("\'hh:mm:ss\'");
 
         case QVariant::Bool:
             return (value.toBool()) ? "true" : "false";
@@ -37,4 +37,9 @@ QString DefaultDatabaseFormatter::getFormattedValue(const QVariant &value)
         default:
             return QString("'") + value.toString() + "'";
     }
+}
+
+QString DefaultDatabaseFormatter::getFormattedTableName(const QString &tablename) const
+{
+    return QString("\"") + tablename + "\"";
 }

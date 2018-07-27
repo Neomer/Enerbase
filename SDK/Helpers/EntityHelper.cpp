@@ -17,41 +17,9 @@ EntityHelper::EntityHelper()
 
 }
 
-void EntityHelper::Load(const AbstractDatabaseQuery *query, AbstractEntity *entity) const
+void EntityHelper::Load(const AbstractDatabaseQuery *query, AbstractEntity *entity)
 {
-    const QMetaObject *metaObject = entity->metaObject();
-    for (auto i = metaObject->propertyOffset(); i < metaObject->propertyCount(); i++)
-    {
-        auto metaProperty = metaObject->property(i);
-        if (!metaProperty.isWritable() || metaProperty.isConstant())
-        {
-            continue;
-        }
-        if (!query->hasField(metaProperty.name()))
-        {
-            continue;
-        }
-        try
-        {
-            auto value = query->value(metaProperty.name());
-            if (!value.isValid())
-            {
-                continue;
-            }
-            if (!metaProperty.write(entity, value))
-            {
-                throw PropertyReadWriteException(entity, metaProperty.name());
-            }
-        }
-        catch (OutOfRangeException &)
-        {
-            continue;
-        }
-        catch (DataFormatException &)
-        {
-            continue;
-        }
-    }
+    WritePropertiesPrivate(entity, entity->metaObject(), query);
 }
 
 void EntityHelper::GetFields(const AbstractEntity *entity, QStringList &fields, char quote, bool recursievly) const
@@ -64,7 +32,7 @@ void EntityHelper::GetProperties(const AbstractEntity *entity, PropertyList &pro
     GetPropertiesPrivate(entity, entity->metaObject(), properties);
 }
 
-void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider) const
+void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider)
 {
     try
     {
@@ -129,5 +97,46 @@ void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMet
             continue;
         }
         properties << QPair<QString, QVariant>(QString(metaProperty.name()), metaProperty.read(entity));
+    }
+}
+
+void EntityHelper::WritePropertiesPrivate(AbstractEntity *entity, const QMetaObject *metaObject, const AbstractDatabaseQuery *query)
+{
+    if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
+    {
+        WritePropertiesPrivate(entity, metaObject->superClass(), query);
+    }
+
+    for (auto i = metaObject->propertyOffset(); i < metaObject->propertyCount(); i++)
+    {
+        auto metaProperty = metaObject->property(i);
+        if (!metaProperty.isWritable() || metaProperty.isConstant())
+        {
+            continue;
+        }
+        if (!query->hasField(metaProperty.name()))
+        {
+            continue;
+        }
+        try
+        {
+            auto value = query->value(metaProperty.name());
+            if (!value.isValid())
+            {
+                continue;
+            }
+            if (!metaProperty.write(entity, value))
+            {
+                throw PropertyReadWriteException(entity, metaProperty.name());
+            }
+        }
+        catch (OutOfRangeException &)
+        {
+            continue;
+        }
+        catch (DataFormatException &)
+        {
+            continue;
+        }
     }
 }

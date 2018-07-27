@@ -23,7 +23,7 @@ public:
     /// \param query (in) результат запроса к БД
     /// \param entity (in) сущность
     ///
-    void Load(const AbstractDatabaseQuery *query, AbstractEntity *entity) const;
+    void Load(const AbstractDatabaseQuery *query, AbstractEntity *entity);
     ///
     /// \brief GetFields возвращает список свойств, помеченных как STORED
     /// \param entity (in) сущность
@@ -40,11 +40,12 @@ public:
     ///
     void GetProperties(const AbstractEntity *entity, PropertyList &properties);
 
-    void GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider) const;
+    void GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider);
 
 private:
     void GetFieldsPrivate(const QMetaObject *metaObject, QStringList &fields, char quote = 0, bool recursievly = true) const;
     void GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, PropertyList &properties);
+    void WritePropertiesPrivate(AbstractEntity *entity, const QMetaObject *metaObject, const AbstractDatabaseQuery *query);
 
 };
 
