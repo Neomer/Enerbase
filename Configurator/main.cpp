@@ -26,6 +26,9 @@ int main(int argc, char *argv[])
             cs.setPassword("123456");
             cs.setDatabase("Enerbase");
             auto p = new PostgreSQLProvider();
+            {
+                DatabaseHelper &dbi = DatabaseHelper::Instance();
+            }
             try
             {
                 p->open(cs);
@@ -51,7 +54,7 @@ int main(int argc, char *argv[])
 
                 try
                 {
-                    EntityHelper::Instance().Load(query.get(), &ent);
+                    ent.getById(QUuid("{0ce63551-bab7-4394-b8f7-f282262f6437}"), DatabaseHelper::Instance().getActiveProviderNotNull());
                 }
                 catch (PropertyReadWriteException &ex)
                 {

@@ -17,7 +17,7 @@ public:
     void open(const AbstractConnectionStringProvider &connectionString) override;
     void close() override;
 
-    std::shared_ptr<AbstractDatabaseQuery> exec(const char *sql) override;
+    std::shared_ptr<AbstractDatabaseQuery> exec(const char *sql) const override;
 
 private:
     void *_connection;

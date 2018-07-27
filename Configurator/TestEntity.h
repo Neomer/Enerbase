@@ -5,19 +5,17 @@
 #include <QDateTime>
 
 #include <SDK/BasicTypes.h>
-#include <SDK/Model/AbstractEntity.h>
+#include <SDK/Model/AbstractIdentifiedEntity.h>
 
-class TestEntity : public AbstractEntity
+class TestEntity : public AbstractIdentifiedEntity
 {
     Q_OBJECT
 
-    Q_PROPERTY(QUuid Id READ getId WRITE setId NOTIFY IdChanged)
     Q_PROPERTY(QString Name READ getName WRITE setName NOTIFY NameChanged)
     Q_PROPERTY(int Index READ getIndex WRITE setIndex NOTIFY IndexChanged)
     Q_PROPERTY(QDateTime date READ getDate WRITE setDate NOTIFY DateChanged)
     Q_PROPERTY(bool logical READ getLogical WRITE setLogical NOTIFY LogicalChanged)
 
-    QUuid m_Id;
     QString m_Name;
     int m_Index;
     QDateTime m_date;
@@ -26,10 +24,6 @@ class TestEntity : public AbstractEntity
 public:
     TestEntity();
 
-    QUuid getId() const
-    {
-        return m_Id;
-    }
     QString getName() const
     {
         return m_Name;
@@ -51,14 +45,6 @@ public:
     }
 
 public slots:
-    void setId(QUuid Id)
-    {
-        if (m_Id == Id)
-            return;
-
-        m_Id = Id;
-        emit IdChanged(m_Id);
-    }
     void setName(QString Name)
     {
         if (m_Name == Name)
@@ -96,11 +82,14 @@ public slots:
     }
 
 signals:
-    void IdChanged(QUuid Id);
     void NameChanged(QString Name);
     void IndexChanged(int Index);
     void DateChanged(QDateTime date);
     void LogicalChanged(bool logical);
+
+    // AbstractEntity interface
+public:
+    virtual const char *getTableName() const override { return "Test"; }
 };
 
 #endif // TESTENTITY_H

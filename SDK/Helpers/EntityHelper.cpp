@@ -4,6 +4,10 @@
 #include <SDK/Exceptions/DataFormatException.h>
 #include <SDK/Model/PropertyReadWriteException.h>
 #include <SDK/Exceptions/OutOfRangeException.h>
+#include <SDK/Exceptions/NotNullException.h>
+
+#include <SDK/Helpers/DatabaseHelper.h>
+#include <SDK/Database/AbstractDatabaseProvider.h>
 
 #include "EntityHelper.h"
 
@@ -47,5 +51,18 @@ void EntityHelper::Load(const AbstractDatabaseQuery *query, AbstractEntity *enti
         {
             continue;
         }
+    }
+}
+
+void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider) const
+{
+    try
+    {
+        auto result = provider->exec(QString("select * from \"Enerbase\".\"" + QString(entity->getTableName()) + "\" where \"Id\"='" + id.toString() + "' limit 1;"));
+        Load(result.get(), entity);
+    }
+    catch (NotNullException &ex)
+    {
+
     }
 }

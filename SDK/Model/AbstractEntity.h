@@ -17,6 +17,7 @@ class SDKSHARED_EXPORT AbstractEntity :
 public:
     explicit AbstractEntity(QObject *parent = nullptr);
 
+    virtual const char *getTableName() const = 0;
 };
 
 #endif // ABSTRACTENTITY_H

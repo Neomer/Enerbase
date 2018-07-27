@@ -33,7 +33,7 @@ void PostgreSQLProvider::close()
     PQfinish((PGconn *)_connection);
 }
 
-std::shared_ptr<AbstractDatabaseQuery> PostgreSQLProvider::exec(const char *sql)
+std::shared_ptr<AbstractDatabaseQuery> PostgreSQLProvider::exec(const char *sql) const
 {
     if (_connection == nullptr)
     {

@@ -12,15 +12,25 @@
 
 class SDKSHARED_EXPORT DatabaseHelper
 {
-    SINGLETON(DatabaseHelper)
-
 public:
+    static DatabaseHelper& Instance()
+    {
+        static DatabaseHelper i;
+        return i;
+    }
+
+
     void registerProvider(AbstractDatabaseProvider *provider, bool isActive = true);
     AbstractDatabaseProvider *getActiveProvider();
     AbstractDatabaseProvider *getActiveProviderNotNull();
     void unregisterAll();
 
 private:
+    DatabaseHelper();
+    ~DatabaseHelper();
+    DatabaseHelper(const DatabaseHelper &other) = delete;
+    DatabaseHelper& operator =(const DatabaseHelper &other) = delete;
+
     QVector<AbstractDatabaseProvider *> _providers;
 };
 
