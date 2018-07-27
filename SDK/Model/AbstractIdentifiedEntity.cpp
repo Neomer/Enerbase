@@ -41,11 +41,21 @@ void AbstractIdentifiedEntity::save(const AbstractDatabaseProvider *provider)
 
     if (isNew())
     {
-        for (int i = 0; i < prop.count(); ++i)
+        QString fields, values;
+        for (int i = 0; i < prop.count() - 1; ++i)
         {
             auto p = prop.at(i);
-
+            fields.append(provider->getFormatter()->getFormattedFieldName(p.first) + ",");
+            values.append(provider->getFormatter()->getFormattedValue(p.second) + ",");
         }
+        fields.append(provider->getFormatter()->getFormattedFieldName(prop.at(prop.count() - 1).first));
+        values.append(provider->getFormatter()->getFormattedValue(prop.at(prop.count() - 1).second));
+
+        sql = QString("insert into %1.%2 (%3) values (%4);").arg(
+                provider->getFormatter()->getFormattedTableName("Enerbase"),
+                provider->getFormatter()->getFormattedTableName(getTableName()),
+                fields,
+                values);
     }
     else
     {

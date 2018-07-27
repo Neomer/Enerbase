@@ -12,6 +12,8 @@
 #include <SDK/Exceptions/OutOfRangeException.h>
 #include <SDK/Exceptions/NotFoundException.h>
 
+#include <SDK/Model/UserModel.h>
+
 #include "TestEntity.h"
 
 int main(int argc, char *argv[])
@@ -69,6 +71,10 @@ int main(int argc, char *argv[])
                 ent.setIndex(-2);
                 ent.setName("New name");
                 ent.save(DatabaseHelper::Instance().getActiveProviderNotNull());
+
+                UserModel user;
+                user.setId("{0ce63551-bab7-4394-b8f7-f282262f6437}");
+                user.save(DatabaseHelper::Instance().getActiveProviderNotNull());
             }
             catch (NotNullException &)
             {
@@ -86,10 +92,14 @@ int main(int argc, char *argv[])
         auto result = a.exec();
 
         DatabaseHelper::Instance().unregisterAll();
+
+        return result;
     }
     catch (BaseException &ex)
     {
         printf("Exception: %s", ex.what());
         return -1;
     }
+
+    return 0;
 }
