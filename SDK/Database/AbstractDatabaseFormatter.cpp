@@ -4,3 +4,8 @@ AbstractDatabaseFormatter::AbstractDatabaseFormatter()
 {
 
 }
+
+AbstractDatabaseFormatter::~AbstractDatabaseFormatter()
+{
+
+}

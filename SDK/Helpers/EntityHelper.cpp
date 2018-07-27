@@ -1,4 +1,4 @@
-#include <QMetaObject>
+﻿#include <QMetaObject>
 #include <QMetaProperty>
 
 #include <SDK/Exceptions/DataFormatException.h>

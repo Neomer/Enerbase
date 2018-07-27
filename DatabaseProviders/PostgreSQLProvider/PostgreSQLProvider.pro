@@ -46,5 +46,5 @@ unix {
 include(../../paths.pri)
 include(../../modules.pri)
 
-INCLUDEPATH += "C:/Program Files (x86)/PostgreSQL/10/include" "C:/Program Files (x86)/PostgreSQL/10/include/server"
-LIBS += -L"C:/Program Files (x86)/PostgreSQL/10/lib" -l"libpq"
+INCLUDEPATH += $$PWD/extern/10/x86/include
+LIBS += -L$$PWD/extern/10/x86/lib -l"libpq"

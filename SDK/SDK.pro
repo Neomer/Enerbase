@@ -44,7 +44,8 @@ SOURCES += \
     Model/AbstractIdentifiedEntity.cpp \
     Exceptions/NotFoundException.cpp \
     Database/AbstractDatabaseFormatter.cpp \
-    Database/DefaultDatabaseFormatter.cpp
+    Database/DefaultDatabaseFormatter.cpp \
+    Model/UserModel.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -73,7 +74,8 @@ HEADERS += \
     Model/AbstractIdentifiedEntity.h \
     Exceptions/NotFoundException.h \
     Database/AbstractDatabaseFormatter.h \
-    Database/DefaultDatabaseFormatter.h
+    Database/DefaultDatabaseFormatter.h \
+    Model/UserModel.h
 
 unix {
     target.path = /usr/lib
