@@ -41,7 +41,8 @@ SOURCES += \
     Helpers/EntityHelper.cpp \
     Model/EntityBaseException.cpp \
     Model/PropertyReadWriteException.cpp \
-    Model/AbstractIdentifiedEntity.cpp
+    Model/AbstractIdentifiedEntity.cpp \
+    Exceptions/NotFoundException.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -67,7 +68,8 @@ HEADERS += \
     Helpers/EntityHelper.h \
     Model/EntityBaseException.h \
     Model/PropertyReadWriteException.h \
-    Model/AbstractIdentifiedEntity.h
+    Model/AbstractIdentifiedEntity.h \
+    Exceptions/NotFoundException.h
 
 unix {
     target.path = /usr/lib

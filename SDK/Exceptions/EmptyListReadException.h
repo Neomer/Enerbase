@@ -2,8 +2,9 @@
 #define EMPTYLISTREADEXCEPTION_H
 
 #include "BaseException.h"
+#include "../sdk_global.h"
 
-class EmptyListReadException : public BaseException
+class SDKSHARED_EXPORT EmptyListReadException : public BaseException
 {
 public:
     EmptyListReadException();

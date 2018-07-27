@@ -91,11 +91,6 @@ bool PostgreSQLQuery::isValid() const
     return false;
 }
 
-bool PostgreSQLQuery::isEmpty() const
-{
-    return PQresultStatus(_result) == PGRES_EMPTY_QUERY;
-}
-
 void PostgreSQLQuery::getFormattedValue(const char *c_value, Oid type_id, QVariant &value) const
 {
     QString s(c_value);

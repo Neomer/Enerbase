@@ -11,10 +11,10 @@ class TestEntity : public AbstractIdentifiedEntity
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString Name READ getName WRITE setName NOTIFY NameChanged)
-    Q_PROPERTY(int Index READ getIndex WRITE setIndex NOTIFY IndexChanged)
-    Q_PROPERTY(QDateTime date READ getDate WRITE setDate NOTIFY DateChanged)
-    Q_PROPERTY(bool logical READ getLogical WRITE setLogical NOTIFY LogicalChanged)
+    Q_PROPERTY(QString Name READ getName WRITE setName NOTIFY NameChanged STORED true )
+    Q_PROPERTY(int Index READ getIndex WRITE setIndex NOTIFY IndexChanged STORED true)
+    Q_PROPERTY(QDateTime date READ getDate WRITE setDate NOTIFY DateChanged STORED true)
+    Q_PROPERTY(bool logical READ getLogical WRITE setLogical NOTIFY LogicalChanged STORED true)
 
     QString m_Name;
     int m_Index;

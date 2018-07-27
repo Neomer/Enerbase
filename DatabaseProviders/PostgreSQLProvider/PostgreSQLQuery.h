@@ -24,7 +24,6 @@ public:
     virtual QVariant value(int index) const override;
     virtual QVariant value(const char *name) const override;
     virtual bool isValid() const override;
-    virtual bool isEmpty() const override;
 
 private:
     PGresult *_result;

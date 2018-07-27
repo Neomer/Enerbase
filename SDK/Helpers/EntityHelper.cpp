@@ -54,6 +54,16 @@ void EntityHelper::Load(const AbstractDatabaseQuery *query, AbstractEntity *enti
     }
 }
 
+void EntityHelper::GetFields(const AbstractEntity *entity, QStringList &fields, char quote, bool recursievly) const
+{
+    GetFieldsPrivate(entity->metaObject(), fields, quote, recursievly);
+}
+
+void EntityHelper::GetProperties(const AbstractEntity *entity, QVector<QPair<QString, QVariant> > &properties)
+{
+
+}
+
 void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractDatabaseProvider *provider) const
 {
     try
@@ -64,5 +74,60 @@ void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractD
     catch (NotNullException &ex)
     {
 
+    }
+}
+
+void EntityHelper::GetFieldsPrivate(const QMetaObject *metaObject, QStringList &fields, char quote, bool recursievly) const
+{
+    if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
+    {
+        GetFieldsPrivate(metaObject->superClass(), fields, quote, recursievly);
+    }
+
+    for (auto i = metaObject->propertyOffset(); i < metaObject->propertyCount(); i++)
+    {
+        auto metaProperty = metaObject->property(i);
+        if (!metaProperty.isStored())
+        {
+            continue;
+        }
+        if (quote != 0)
+        {
+            int l = strlen(metaProperty.name());
+            char f[l + 3];
+            f[0] = quote;
+            f[l + 1] = quote;
+            f[l + 2] = 0;
+            memcpy(f + 1, metaProperty.name(), l);
+
+            fields << f;
+        }
+        else
+        {
+            fields << metaProperty.name();
+        }
+    }
+
+}
+
+void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, QVector<QPair<QString, QVariant> > &properties)
+{
+    if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
+    {
+        GetPropertiesPrivate(entity, metaObject->superClass(), properties);
+    }
+
+    for (auto i = metaObject->propertyOffset(); i < metaObject->propertyCount(); i++)
+    {
+        auto metaProperty = metaObject->property(i);
+        if (!metaProperty.isStored())
+        {
+            continue;
+        }
+        if (!metaProperty.isReadable())
+        {
+            continue;
+        }
+        properties << QPair<QString, QString>(metaProperty.name(), metaProperty.read(entity));
     }
 }

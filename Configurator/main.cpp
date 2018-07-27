@@ -5,9 +5,12 @@
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLProvider.h>
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLConnectionStringProvider.h>
 #include <SDK/Helpers/DatabaseHelper.h>
-#include <SDK/Exceptions/OutOfRangeException.h>
 #include <SDK/Helpers/EntityHelper.h>
+
 #include <SDK/Model/PropertyReadWriteException.h>
+
+#include <SDK/Exceptions/OutOfRangeException.h>
+#include <SDK/Exceptions/NotFoundException.h>
 
 #include "TestEntity.h"
 
@@ -26,9 +29,6 @@ int main(int argc, char *argv[])
             cs.setPassword("123456");
             cs.setDatabase("Enerbase");
             auto p = new PostgreSQLProvider();
-            {
-                DatabaseHelper &dbi = DatabaseHelper::Instance();
-            }
             try
             {
                 p->open(cs);
@@ -56,11 +56,19 @@ int main(int argc, char *argv[])
                 {
                     ent.getById(QUuid("{0ce63551-bab7-4394-b8f7-f282262f6437}"), DatabaseHelper::Instance().getActiveProviderNotNull());
                 }
+                catch (NotFoundException &ex)
+                {
+                    qDebug() << "Entity not found!";
+                }
                 catch (PropertyReadWriteException &ex)
                 {
                     qDebug() << "Property write exception:" << ex.getPropertyName();
                 }
                 query->close();
+
+                ent.setIndex(-2);
+                ent.setName("New name");
+                ent.save(DatabaseHelper::Instance().getActiveProviderNotNull());
             }
             catch (NotNullException &)
             {
