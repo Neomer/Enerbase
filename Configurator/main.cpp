@@ -73,7 +73,10 @@ int main(int argc, char *argv[])
                 ent.save(DatabaseHelper::Instance().getActiveProviderNotNull());
 
                 UserModel user;
-                user.setId("{0ce63551-bab7-4394-b8f7-f282262f6437}");
+                user.getById("{0ce63551-bab7-4394-b8f7-f282262f6437}", DatabaseHelper::Instance().getActiveProviderNotNull());
+                user.setUsername("admin");
+                user.setPassword("admin");
+                user.setLastVisit(QDateTime::currentDateTime());
                 user.save(DatabaseHelper::Instance().getActiveProviderNotNull());
             }
             catch (NotNullException &)
