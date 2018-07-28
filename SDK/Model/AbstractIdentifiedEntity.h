@@ -21,6 +21,7 @@ public:
 
     virtual void getById(const QUuid &id, const AbstractDatabaseProvider *provider);
     virtual void save(const AbstractDatabaseProvider *provider);
+    virtual void remove(const AbstractDatabaseProvider *provider);
 
 public slots:
     void setId(QUuid Id);

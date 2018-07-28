@@ -82,6 +82,17 @@ void AbstractIdentifiedEntity::save(const AbstractDatabaseProvider *provider)
     {
         provider->exec(sql);
     }
+    setIsNew(false);
+}
+
+void AbstractIdentifiedEntity::remove(const AbstractDatabaseProvider *provider)
+{
+    provider->exec(QString("delete from %1.%2 where %3=%4 limit 1;").arg(
+                       provider->getFormatter()->getFormattedTableName("Enerbase"),
+                       provider->getFormatter()->getFormattedTableName(getTableName()),
+                       provider->getFormatter()->getFormattedFieldName("Id"),
+                       provider->getFormatter()->getFormattedValue(getId())));
+    setIsNew(true);
 }
 
 void AbstractIdentifiedEntity::setId(QUuid Id)
