@@ -1,9 +1,16 @@
+#include <QDebug>
+
 #include "DatabaseHelper.h"
 #include <SDK/Database/DatabaseException.h>
 
 DatabaseHelper::DatabaseHelper()
 {
+    qDebug() << "Init DatabaseHelper";
+}
 
+DatabaseHelper::~DatabaseHelper()
+{
+    unregisterAll();
 }
 
 void DatabaseHelper::registerProvider(AbstractDatabaseProvider *provider, bool isActive)

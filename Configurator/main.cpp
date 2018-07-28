@@ -5,13 +5,21 @@
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLProvider.h>
 #include <DatabaseProviders/PostgreSQLProvider/PostgreSQLConnectionStringProvider.h>
 #include <SDK/Helpers/DatabaseHelper.h>
+#include <SDK/Helpers/EntityHelper.h>
+
+#include <SDK/Model/PropertyReadWriteException.h>
+
 #include <SDK/Exceptions/OutOfRangeException.h>
+#include <SDK/Exceptions/NotFoundException.h>
+
+#include <SDK/Model/UserModel.h>
+
+#include "TestEntity.h"
 
 int main(int argc, char *argv[])
 {
     try
     {
-
         QApplication a(argc, argv);
 
         try
@@ -44,18 +52,32 @@ int main(int argc, char *argv[])
                 query->fields(flist);
                 qDebug() << flist;
 
+                TestEntity ent;
+
                 try
                 {
-                    foreach (auto f, flist)
-                    {
-                        qDebug() << "Value [" << f << "]:" << query->value(f);
-                    }
+                    ent.getById(QUuid("{0ce63551-bab7-4394-b8f7-f282262f6437}"), DatabaseHelper::Instance().getActiveProviderNotNull());
                 }
-                catch (OutOfRangeException &)
+                catch (NotFoundException &ex)
                 {
-                    qDebug() << "Column not found!";
+                    qDebug() << "Entity not found!";
+                }
+                catch (PropertyReadWriteException &ex)
+                {
+                    qDebug() << "Property write exception:" << ex.getPropertyName();
                 }
                 query->close();
+
+                ent.setIndex(-2);
+                ent.setName("New name");
+                ent.save(DatabaseHelper::Instance().getActiveProviderNotNull());
+
+                UserModel user;
+                user.getById("{0ce63551-bab7-4394-b8f7-f282262f6437}", DatabaseHelper::Instance().getActiveProviderNotNull());
+                user.setUsername("admin");
+                user.setPassword("admin");
+                user.setLastVisit(QDateTime::currentDateTime());
+                user.save(DatabaseHelper::Instance().getActiveProviderNotNull());
             }
             catch (NotNullException &)
             {
@@ -73,10 +95,14 @@ int main(int argc, char *argv[])
         auto result = a.exec();
 
         DatabaseHelper::Instance().unregisterAll();
+
+        return result;
     }
     catch (BaseException &ex)
     {
         printf("Exception: %s", ex.what());
         return -1;
     }
+
+    return 0;
 }

@@ -36,7 +36,16 @@ SOURCES += \
     Database/DatabaseQueryBaseException.cpp \
     Database/BaseDatabaseQuery.cpp \
     Exceptions/OutOfRangeException.cpp \
-    Exceptions/DataFormatException.cpp
+    Exceptions/DataFormatException.cpp \
+    Model/AbstractEntity.cpp \
+    Helpers/EntityHelper.cpp \
+    Model/EntityBaseException.cpp \
+    Model/PropertyReadWriteException.cpp \
+    Model/AbstractIdentifiedEntity.cpp \
+    Exceptions/NotFoundException.cpp \
+    Database/AbstractDatabaseFormatter.cpp \
+    Database/DefaultDatabaseFormatter.cpp \
+    Model/UserModel.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -57,7 +66,16 @@ HEADERS += \
     Database/DatabaseQueryBaseException.h \
     Database/BaseDatabaseQuery.h \
     Exceptions/OutOfRangeException.h \
-    Exceptions/DataFormatException.h
+    Exceptions/DataFormatException.h \
+    Model/AbstractEntity.h \
+    Helpers/EntityHelper.h \
+    Model/EntityBaseException.h \
+    Model/PropertyReadWriteException.h \
+    Model/AbstractIdentifiedEntity.h \
+    Exceptions/NotFoundException.h \
+    Database/AbstractDatabaseFormatter.h \
+    Database/DefaultDatabaseFormatter.h \
+    Model/UserModel.h
 
 unix {
     target.path = /usr/lib

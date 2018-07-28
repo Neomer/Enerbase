@@ -2,8 +2,9 @@
 #define NOTNULLEXCEPTION_H
 
 #include "BaseException.h"
+#include "../sdk_global.h"
 
-class NotNullException : public BaseException
+class SDKSHARED_EXPORT NotNullException : public BaseException
 {
 public:
     NotNullException();

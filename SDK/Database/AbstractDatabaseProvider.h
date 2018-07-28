@@ -7,6 +7,7 @@
 #include "../sdk_global.h"
 #include "AbstractDatabaseQuery.h"
 #include "AbstractConnectionStringProvider.h"
+#include "AbstractDatabaseFormatter.h"
 
 class SDKSHARED_EXPORT AbstractDatabaseProvider
 {
@@ -19,8 +20,10 @@ public:
     virtual void open(const AbstractConnectionStringProvider &connectionString) = 0;
     virtual void close() = 0;
 
-    virtual std::shared_ptr<AbstractDatabaseQuery> exec(const QStringView &sql);
-    virtual std::shared_ptr<AbstractDatabaseQuery> exec(const char *sql) = 0;
+    virtual std::shared_ptr<AbstractDatabaseQuery> exec(const QStringView &sql) const;
+    virtual std::shared_ptr<AbstractDatabaseQuery> exec(const char *sql) const = 0;
+
+    virtual const AbstractDatabaseFormatter *getFormatter() const = 0;
 };
 
 #endif // ABSTRACTDATABASEPROVIDER_H

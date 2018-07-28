@@ -27,7 +27,7 @@ void PostgreSQLQuery::close()
     PQclear(_result);
 }
 
-void PostgreSQLQuery::fields(QStringList &result)
+void PostgreSQLQuery::fields(QStringList &result) const
 {
     for (auto i = 0; i < fieldsCount(); i++)
     {
@@ -35,12 +35,17 @@ void PostgreSQLQuery::fields(QStringList &result)
     }
 }
 
-int PostgreSQLQuery::rowCount()
+int PostgreSQLQuery::rowCount() const
 {
     return PQntuples(_result);
 }
 
-i32 PostgreSQLQuery::field(const char *name)
+bool PostgreSQLQuery::hasField(const char *name) const
+{
+    return field(name) >= 0;
+}
+
+i32 PostgreSQLQuery::field(const char *name) const
 {
     auto result = PQfnumber(_result, name);
     if (result == -1 && name[0] != '"')
@@ -56,12 +61,12 @@ i32 PostgreSQLQuery::field(const char *name)
     return result;
 }
 
-int PostgreSQLQuery::fieldsCount()
+int PostgreSQLQuery::fieldsCount() const
 {
     return PQnfields(_result);
 }
 
-QVariant PostgreSQLQuery::value(int index)
+QVariant PostgreSQLQuery::value(int index) const
 {
     if (index < 0 || index >= fieldsCount())
     {
@@ -76,22 +81,17 @@ QVariant PostgreSQLQuery::value(int index)
     return ret;
 }
 
-QVariant PostgreSQLQuery::value(const char *name)
+QVariant PostgreSQLQuery::value(const char *name) const
 {
     return value(field(name));
 }
 
-bool PostgreSQLQuery::isValid()
+bool PostgreSQLQuery::isValid() const
 {
     return false;
 }
 
-bool PostgreSQLQuery::isEmpty()
-{
-    return PQresultStatus(_result) == PGRES_EMPTY_QUERY;
-}
-
-void PostgreSQLQuery::getFormattedValue(const char *c_value, Oid type_id, QVariant &value)
+void PostgreSQLQuery::getFormattedValue(const char *c_value, Oid type_id, QVariant &value) const
 {
     QString s(c_value);
     bool ok;

@@ -14,7 +14,7 @@ public:
     BaseDatabaseQuery();
 
 public:
-    i32 getCurrentRow() { return _row_idx; }
+    i32 getCurrentRow() const { return _row_idx; }
 
     // AbstractDatabaseQuery interface
 public:
@@ -22,7 +22,7 @@ public:
     virtual bool last() override;
     virtual bool next() override;
     virtual bool prev() override;
-    virtual bool isEnd() override;
+    virtual bool isEnd() const override;
 
 private:
     i32 _row_idx;

@@ -21,7 +21,7 @@ AbstractDatabaseProvider::~AbstractDatabaseProvider()
 
 }
 
-std::shared_ptr<AbstractDatabaseQuery> AbstractDatabaseProvider::exec(const QStringView &sql)
+std::shared_ptr<AbstractDatabaseQuery> AbstractDatabaseProvider::exec(const QStringView &sql) const
 {
     char cs[sql.length()];
     StringHelper::StringToConstChar(sql, cs);

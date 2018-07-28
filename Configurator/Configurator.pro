@@ -28,10 +28,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        MainWindow.cpp
+        MainWindow.cpp \
+    TestEntity.cpp
 
 HEADERS += \
-        MainWindow.h
+        MainWindow.h \
+    TestEntity.h
 
 FORMS += \
         MainWindow.ui

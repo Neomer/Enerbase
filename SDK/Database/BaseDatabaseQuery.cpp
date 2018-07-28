@@ -38,7 +38,7 @@ bool BaseDatabaseQuery::prev()
     return false;
 }
 
-bool BaseDatabaseQuery::isEnd()
+bool BaseDatabaseQuery::isEnd() const
 {
     return (isEmpty() || _row_idx >= rowCount());
 }
