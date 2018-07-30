@@ -17,6 +17,12 @@ EntityHelper::EntityHelper()
 
 }
 
+EntityHelper & EntityHelper::Instance()
+{
+    static EntityHelper inst;
+    return inst;
+}
+
 void EntityHelper::Load(const AbstractDatabaseQuery *query, AbstractEntity *entity)
 {
     WritePropertiesPrivate(entity, entity->metaObject(), query);
