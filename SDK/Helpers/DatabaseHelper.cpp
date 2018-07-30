@@ -13,6 +13,12 @@ DatabaseHelper::~DatabaseHelper()
     unregisterAll();
 }
 
+DatabaseHelper &DatabaseHelper::Instance()
+{
+    static DatabaseHelper i;
+    return i;
+}
+
 void DatabaseHelper::registerProvider(AbstractDatabaseProvider *provider, bool isActive)
 {
     _providers.push_back(provider);

@@ -1,4 +1,5 @@
 #include <QDateTime>
+#include <QUuid>
 
 #include "DefaultDatabaseFormatter.h"
 
@@ -14,6 +15,11 @@ QString DefaultDatabaseFormatter::getFormattedFieldName(const QString &fieldname
 
 QString DefaultDatabaseFormatter::getFormattedValue(const QVariant &value)const
 {
+    if (value.isNull())
+    {
+        return "NULL";
+    }
+
     switch (value.type())
     {
         case QVariant::Int:
@@ -33,6 +39,9 @@ QString DefaultDatabaseFormatter::getFormattedValue(const QVariant &value)const
 
         case QVariant::Bool:
             return (value.toBool()) ? "true" : "false";
+
+        case QVariant::Uuid:
+            return (value.toUuid().isNull()) ? "NULL" : QString("'") + value.toString() + "'";
 
         default:
             return QString("'") + value.toString() + "'";

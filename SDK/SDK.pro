@@ -45,7 +45,10 @@ SOURCES += \
     Exceptions/NotFoundException.cpp \
     Database/AbstractDatabaseFormatter.cpp \
     Database/DefaultDatabaseFormatter.cpp \
-    Model/UserModel.cpp
+    Model/UserModel.cpp \
+    Model/ObjectsTreeModel.cpp \
+    Managers/ObjectsTreeManager.cpp \
+    Database/DuplicateException.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -75,7 +78,10 @@ HEADERS += \
     Exceptions/NotFoundException.h \
     Database/AbstractDatabaseFormatter.h \
     Database/DefaultDatabaseFormatter.h \
-    Model/UserModel.h
+    Model/UserModel.h \
+    Model/ObjectsTreeModel.h \
+    Managers/ObjectsTreeManager.h \
+    Database/DuplicateException.h
 
 unix {
     target.path = /usr/lib

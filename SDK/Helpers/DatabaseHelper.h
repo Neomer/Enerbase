@@ -13,11 +13,7 @@
 class SDKSHARED_EXPORT DatabaseHelper
 {
 public:
-    static DatabaseHelper& Instance()
-    {
-        static DatabaseHelper i;
-        return i;
-    }
+    static DatabaseHelper &Instance();
 
 
     void registerProvider(AbstractDatabaseProvider *provider, bool isActive = true);

@@ -2,6 +2,9 @@
 #define ABSTRACTIDENTIFIEDENTITY_H
 
 #include <QUuid>
+#include <QVector>
+#include <QPair>
+#include <QVariant>
 
 #include <SDK/Model/AbstractEntity.h>
 #include <SDK/Database/AbstractDatabaseProvider.h>
@@ -15,13 +18,13 @@ class SDKSHARED_EXPORT AbstractIdentifiedEntity : public AbstractEntity
     QUuid m_Id;
 
 public:
-    AbstractIdentifiedEntity();
+    AbstractIdentifiedEntity(QUuid uid = QUuid(), QObject *parent = nullptr);
 
     QUuid getId() const;
 
-    virtual void getById(const QUuid &id, const AbstractDatabaseProvider *provider);
-    virtual void save(const AbstractDatabaseProvider *provider);
-    virtual void remove(const AbstractDatabaseProvider *provider);
+    virtual void getById(const QUuid &id, const AbstractDatabaseProvider *provider = nullptr);
+    virtual void save(const AbstractDatabaseProvider *provider = nullptr);
+    virtual void remove(const AbstractDatabaseProvider *provider = nullptr);
 
 public slots:
     void setId(QUuid Id);
@@ -39,6 +42,8 @@ private:
 
 protected:
     void setIsValid(bool value);
+
+    virtual void getPropertyList(QVector<QPair<QString, QVariant>> &list);
 };
 
 #endif // ABSTRACTIDENTIFIEDENTITY_H
