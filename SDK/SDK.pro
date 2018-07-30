@@ -48,7 +48,9 @@ SOURCES += \
     Model/UserModel.cpp \
     Model/ObjectsTreeModel.cpp \
     Managers/ObjectsTreeManager.cpp \
-    Database/DuplicateException.cpp
+    Database/DuplicateException.cpp \
+    Model/EntityMetadata.cpp \
+    Model/MetadataEventCallException.cpp
 
 HEADERS += \
         sdk_global.h \ 
@@ -81,7 +83,10 @@ HEADERS += \
     Model/UserModel.h \
     Model/ObjectsTreeModel.h \
     Managers/ObjectsTreeManager.h \
-    Database/DuplicateException.h
+    Database/DuplicateException.h \
+    Model/EntityMetadata.h \
+    Model/MetadataEventCallException.h \
+    Model/Event.h
 
 unix {
     target.path = /usr/lib

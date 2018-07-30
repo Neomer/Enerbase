@@ -45,43 +45,17 @@ int main(int argc, char *argv[])
 
             try
             {
-                auto provider = DatabaseHelper::Instance().getActiveProviderNotNull();
-                auto query = provider->exec("select * from \"Enerbase\".\"Test\";");
-                qDebug() << "Rows:" << query->rowCount();
-
-                QStringList flist;
-                query->fields(flist);
-                qDebug() << flist;
-
                 TestEntity ent;
+                qDebug() << "Before invoke:" << ent.getId();
 
-                try
-                {
-                    ent.getById(QUuid("{0ce63551-bab7-4394-b8f7-f282262f6437}"));
+                try {
+                    ent.metadata().write("Id", QUuid::createUuid());
+                    qDebug() << "After invoke:" << ent.getId();
+                    auto uid = ent.metadata().read<QUuid>("Id");
+                    qDebug() << "Value from metadata:" << uid;
+                } catch (NotFoundException &) {
+                    qDebug() << "Method not found!";
                 }
-                catch (NotFoundException &ex)
-                {
-                    qDebug() << "Entity not found!";
-                }
-                catch (PropertyReadWriteException &ex)
-                {
-                    qDebug() << "Property write exception:" << ex.getPropertyName();
-                }
-                query->close();
-
-                ent.setIndex(-2);
-                ent.setName("New name");
-                ent.save(DatabaseHelper::Instance().getActiveProviderNotNull());
-
-                UserModel user;
-                user.getById("{0ce63551-bab7-4394-b8f7-f282262f6437}");
-                user.setUsername("admin");
-                user.setPassword("admin");
-                user.setLastVisit(QDateTime::currentDateTime());
-                user.save(DatabaseHelper::Instance().getActiveProviderNotNull());
-
-                ObjectsTreeModel root_node(QUuid::createUuid(), "Корневой элемент");
-                root_node.save();
             }
             catch (NotNullException &)
             {

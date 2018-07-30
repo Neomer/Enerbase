@@ -23,11 +23,12 @@ PostgreSQLProvider::~PostgreSQLProvider()
 void PostgreSQLProvider::open(const AbstractConnectionStringProvider &connectionString)
 {
     auto cstr = connectionString.toString();
-    char cs[StringHelper::StringLength(cstr)];
+    char *cs = new char[StringHelper::StringLength(cstr)];
     StringHelper::StringToConstChar(cstr, cs);
     _connection = PQconnectdb(cs);
     if (PQstatus((const PGconn *) _connection) == CONNECTION_BAD)
     {
+        delete [] cs;
         throw DatabaseConnectionRefusedException(connectionString, this, PQerrorMessage((const PGconn *) _connection));
     }
 }

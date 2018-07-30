@@ -8,11 +8,24 @@
 #include <SDK/Defines.h>
 #include <SDK/Database/AbstractDatabaseQuery.h>
 
+#include "EntityMetadata.h"
+
+#define ORM_METAOBJECT      \
+    protected: \
+        EntityMetadata _metadata; \
+    public: \
+        const EntityMetadata &metadata() { return _metadata; }
+
+#define ORM_REGISTER(method, bindname)           \
+    _metadata.registerWriteMethod("##bindname", std::bind(method, this, std::tr1::placeholders::_1));
+
 
 class SDKSHARED_EXPORT AbstractEntity :
         public QObject
 {
     Q_OBJECT
+
+    ORM_METAOBJECT
 
 public:
     explicit AbstractEntity(QObject *parent = nullptr);

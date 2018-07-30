@@ -51,12 +51,13 @@ i32 PostgreSQLQuery::field(const char *name) const
     if (result == -1 && name[0] != '"')
     {
         auto l = strlen(name);
-        char c_name[l + 3];
+        char *c_name = new char[l + 3];
         c_name[0] = c_name[l + 1] = '"';
         c_name[l + 2] = 0;
         memcpy(c_name + 1, name, l);
 
         result = PQfnumber(_result, c_name);
+        delete [] c_name;
     }
     return result;
 }

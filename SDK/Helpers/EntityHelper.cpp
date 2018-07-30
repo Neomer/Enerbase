@@ -53,7 +53,7 @@ void EntityHelper::GetById(QUuid id, AbstractIdentifiedEntity *entity, AbstractD
 
 void EntityHelper::GetFieldsPrivate(const QMetaObject *metaObject, QStringList &fields, char quote, bool recursievly) const
 {
-    if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
+    if (metaObject->superClass() != nullptr && strcmp(metaObject->superClass()->className(), "QObject"))
     {
         GetFieldsPrivate(metaObject->superClass(), fields, quote, recursievly);
     }
@@ -68,13 +68,14 @@ void EntityHelper::GetFieldsPrivate(const QMetaObject *metaObject, QStringList &
         if (quote != 0)
         {
             int l = strlen(metaProperty.name());
-            char f[l + 3];
+            char *f = new char[l + 3];
             f[0] = quote;
             f[l + 1] = quote;
             f[l + 2] = 0;
             memcpy(f + 1, metaProperty.name(), l);
 
             fields << f;
+            delete [] f;
         }
         else
         {
@@ -86,7 +87,7 @@ void EntityHelper::GetFieldsPrivate(const QMetaObject *metaObject, QStringList &
 
 void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMetaObject *metaObject, PropertyList &properties)
 {
-    if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
+    if (metaObject->superClass() != nullptr && strcmp(metaObject->superClass()->className(), "QObject"))
     {
         GetPropertiesPrivate(entity, metaObject->superClass(), properties);
     }
@@ -108,7 +109,7 @@ void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMet
 
 void EntityHelper::WritePropertiesPrivate(AbstractEntity *entity, const QMetaObject *metaObject, const AbstractDatabaseQuery *query)
 {
-    if (metaObject->superClass() != 0 && strcmp(metaObject->superClass()->className(), "QObject"))
+    if (metaObject->superClass() != nullptr && strcmp(metaObject->superClass()->className(), "QObject"))
     {
         WritePropertiesPrivate(entity, metaObject->superClass(), query);
     }

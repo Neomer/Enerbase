@@ -18,7 +18,7 @@ public:
     static void StringToConstChar(const QString &data, char *buffer);
     static void StringToConstChar(const QStringView &data, char *buffer);
 
-    static i32 StringLength(const QStringView &data);
+    static ui32 StringLength(const QStringView &data);
 
     void GetRandomString(QString &data, i16 size);
 

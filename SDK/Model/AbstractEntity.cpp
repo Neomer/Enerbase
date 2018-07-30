@@ -1,4 +1,8 @@
 #include "AbstractEntity.h"
+#include <functional>
+#include <map>
+#include <memory>
+#include <typeindex>
 
 AbstractEntity::AbstractEntity(QObject *parent) :
     QObject(parent),

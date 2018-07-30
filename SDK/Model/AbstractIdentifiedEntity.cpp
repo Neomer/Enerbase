@@ -6,12 +6,15 @@
 #include <SDK/Helpers/EntityHelper.h>
 #include <SDK/Exceptions/NotFoundException.h>
 
+#include <functional>
+
 AbstractIdentifiedEntity::AbstractIdentifiedEntity(QUuid uid, QObject *parent) :
     AbstractEntity(parent),
     m_Id(uid),
     _valid(false)
 {
-
+    _metadata.registerMethod("Id", new Event(std::function<void(QUuid)>(std::bind(&AbstractIdentifiedEntity::setId, this, std::placeholders::_1))));
+    _metadata.registerMethod("Id", new Event(std::function<QUuid(void)>(std::bind(&AbstractIdentifiedEntity::getId, this))));
 }
 
 QUuid AbstractIdentifiedEntity::getId() const

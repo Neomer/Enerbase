@@ -27,7 +27,7 @@ void StringHelper::StringToConstChar(const QStringView &data, char *buffer)
     strcpy(buffer, ba.constData());
 }
 
-i32 StringHelper::StringLength(const QStringView &data)
+ui32 StringHelper::StringLength(const QStringView &data)
 {
     return data.toUtf8().length();
 }

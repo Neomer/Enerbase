@@ -23,7 +23,9 @@ AbstractDatabaseProvider::~AbstractDatabaseProvider()
 
 std::shared_ptr<AbstractDatabaseQuery> AbstractDatabaseProvider::exec(const QStringView &sql) const
 {
-    char cs[StringHelper::StringLength(sql)];
+    char *cs = new char[StringHelper::StringLength(sql)];
     StringHelper::StringToConstChar(sql, cs);
-    return exec(cs);
+    auto ret = exec(cs);
+    delete [] cs;
+    return ret;
 }
