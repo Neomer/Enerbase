@@ -19,7 +19,7 @@
                                 name& operator= (name const&) = delete; \
                                 name(name const &&) = delete; \
                                 name& operator= (name const &&) = delete; \
-                                public: static name &Instance() { static name inst; return inst; }
+                                public: static name &Instance();
 
 #define STATIC(name)         private: name() = delete; \
                              ~name() = delete; \

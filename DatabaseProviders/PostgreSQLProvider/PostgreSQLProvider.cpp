@@ -7,6 +7,8 @@
 #include "PostgreSQLProvider.h"
 #include "PostgreSQLQuery.h"
 
+#include <SDK/Helpers/StringHelper.h>
+
 PostgreSQLProvider::PostgreSQLProvider() :
     _connection(nullptr),
     _formater(new DefaultDatabaseFormatter())
@@ -21,7 +23,7 @@ PostgreSQLProvider::~PostgreSQLProvider()
 void PostgreSQLProvider::open(const AbstractConnectionStringProvider &connectionString)
 {
     auto cstr = connectionString.toString();
-    char cs[cstr.length()];
+    char cs[StringHelper::StringLength(cstr)];
     StringHelper::StringToConstChar(cstr, cs);
     _connection = PQconnectdb(cs);
     if (PQstatus((const PGconn *) _connection) == CONNECTION_BAD)
