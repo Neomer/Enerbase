@@ -13,6 +13,7 @@
 #include <SDK/Exceptions/NotFoundException.h>
 
 #include <SDK/Model/UserModel.h>
+#include <SDK/Model/ObjectsTreeModel.h>
 
 #include "TestEntity.h"
 
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
 
                 try
                 {
-                    ent.getById(QUuid("{0ce63551-bab7-4394-b8f7-f282262f6437}"), DatabaseHelper::Instance().getActiveProviderNotNull());
+                    ent.getById(QUuid("{0ce63551-bab7-4394-b8f7-f282262f6437}"));
                 }
                 catch (NotFoundException &ex)
                 {
@@ -73,11 +74,14 @@ int main(int argc, char *argv[])
                 ent.save(DatabaseHelper::Instance().getActiveProviderNotNull());
 
                 UserModel user;
-                user.getById("{0ce63551-bab7-4394-b8f7-f282262f6437}", DatabaseHelper::Instance().getActiveProviderNotNull());
+                user.getById("{0ce63551-bab7-4394-b8f7-f282262f6437}");
                 user.setUsername("admin");
                 user.setPassword("admin");
                 user.setLastVisit(QDateTime::currentDateTime());
                 user.save(DatabaseHelper::Instance().getActiveProviderNotNull());
+
+                ObjectsTreeModel root_node(QUuid::createUuid(), "Корневой элемент");
+                root_node.save();
             }
             catch (NotNullException &)
             {

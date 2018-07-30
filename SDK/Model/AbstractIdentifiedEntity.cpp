@@ -1,11 +1,14 @@
 #include <QDebug>
 
 #include "AbstractIdentifiedEntity.h"
+
+#include <SDK/Helpers/DatabaseHelper.h>
 #include <SDK/Helpers/EntityHelper.h>
 #include <SDK/Exceptions/NotFoundException.h>
 
-AbstractIdentifiedEntity::AbstractIdentifiedEntity() :
-    AbstractEntity(),
+AbstractIdentifiedEntity::AbstractIdentifiedEntity(QUuid uid, QObject *parent) :
+    AbstractEntity(parent),
+    m_Id(uid),
     _valid(false)
 {
 
@@ -18,6 +21,11 @@ QUuid AbstractIdentifiedEntity::getId() const
 
 void AbstractIdentifiedEntity::getById(const QUuid &id, const AbstractDatabaseProvider *provider)
 {
+    if (provider == nullptr)
+    {
+        provider = DatabaseHelper::Instance().getActiveProviderNotNull();
+    }
+
     auto result = provider->exec(QString("select * from %1.%2 where %3=%4 limit 1;").arg(
                                          provider->getFormatter()->getFormattedTableName(QString("Enerbase")),
                                          provider->getFormatter()->getFormattedTableName(QString(getTableName())),
@@ -34,8 +42,13 @@ void AbstractIdentifiedEntity::getById(const QUuid &id, const AbstractDatabasePr
 
 void AbstractIdentifiedEntity::save(const AbstractDatabaseProvider *provider)
 {
+    if (provider == nullptr)
+    {
+        provider = DatabaseHelper::Instance().getActiveProviderNotNull();
+    }
+
     EntityHelper::PropertyList prop;
-    EntityHelper::Instance().GetProperties(this, prop);
+    getPropertyList(prop);
 
     QString sql;
 
@@ -87,6 +100,11 @@ void AbstractIdentifiedEntity::save(const AbstractDatabaseProvider *provider)
 
 void AbstractIdentifiedEntity::remove(const AbstractDatabaseProvider *provider)
 {
+    if (provider == nullptr)
+    {
+        provider = DatabaseHelper::Instance().getActiveProviderNotNull();
+    }
+
     provider->exec(QString("delete from %1.%2 where %3=%4 limit 1;").arg(
                        provider->getFormatter()->getFormattedTableName("Enerbase"),
                        provider->getFormatter()->getFormattedTableName(getTableName()),
@@ -119,4 +137,9 @@ void AbstractIdentifiedEntity::setIsValid(bool value)
     }
     _valid = value;
     emit ValidChanged(value);
+}
+
+void AbstractIdentifiedEntity::getPropertyList(QVector<QPair<QString, QVariant> > &list)
+{
+    EntityHelper::Instance().GetProperties(this, list);
 }
