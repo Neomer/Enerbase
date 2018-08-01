@@ -10,6 +10,13 @@
 
 class Event
 {
+public:
+    enum class EventType
+    {
+        Read,
+        Write
+    };
+
 private:
     struct base
     {
@@ -27,11 +34,13 @@ private:
         }
     };
     std::unique_ptr<base> p_base;
+    EventType _type;
 
 public:
     template <typename Rt, typename... Args>
-    Event(std::function<Rt(Args...)> aFunc) :
-        p_base(new wrapped<Rt, Args...>(aFunc))
+    Event(EventType type, std::function<Rt(Args...)> aFunc) :
+        p_base(new wrapped<Rt, Args...>(aFunc)),
+        _type(type)
     {
 
     }

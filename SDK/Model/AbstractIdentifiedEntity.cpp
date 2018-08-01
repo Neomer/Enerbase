@@ -135,8 +135,8 @@ void AbstractIdentifiedEntity::registerORMmethods()
 {
     AbstractEntity::registerORMmethods();
 
-    _metadata.registerMethod("Id", new Event(std::function<void(QUuid)>(std::bind(&AbstractIdentifiedEntity::setId, this, std::placeholders::_1))));
-    _metadata.registerMethod("Id", new Event(std::function<QUuid(void)>(std::bind(&AbstractIdentifiedEntity::getId, this))));
+    _metadata.registerMethod("Id", new Event(Event::EventType::Write, std::function<void(QUuid)>(std::bind(&AbstractIdentifiedEntity::setId, this, std::placeholders::_1))));
+    _metadata.registerMethod("Id", new Event(Event::EventType::Read, std::function<QUuid(void)>(std::bind(&AbstractIdentifiedEntity::getId, this))));
 }
 
 void AbstractIdentifiedEntity::setIsValid(bool value)
