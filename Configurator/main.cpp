@@ -43,24 +43,22 @@ int main(int argc, char *argv[])
                 delete p;
             }
 
+            UserModel usr;
+
             try
             {
-                TestEntity ent;
-                qDebug() << "Before invoke:" << ent.getId();
-
-                try {
-                    ent.metadata().write("Id", QUuid::createUuid());
-                    qDebug() << "After invoke:" << ent.getId();
-                    auto uid = ent.metadata().read<QUuid>("Id");
-                    qDebug() << "Value from metadata:" << uid;
-                } catch (NotFoundException &) {
-                    qDebug() << "Method not found!";
-                }
+                usr.getById(QUuid("0ce63551-bab7-4394-b8f7-f282262f6437"));
             }
             catch (NotNullException &)
             {
 
             }
+            catch (NotFoundException &)
+            {
+
+            }
+
+            qDebug() << usr.metadata().read<QString>("Username");
         }
         catch (DatabaseException &ex)
         {

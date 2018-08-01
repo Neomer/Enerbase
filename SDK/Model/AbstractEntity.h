@@ -14,7 +14,9 @@
     protected: \
         EntityMetadata _metadata; \
     public: \
-        const EntityMetadata &metadata() { return _metadata; }
+        const EntityMetadata &metadata() { return _metadata; }  \
+    protected:  \
+    virtual void registerORMmethods() { }
 
 #define ORM_REGISTER(method, bindname)           \
     _metadata.registerWriteMethod("##bindname", std::bind(method, this, std::tr1::placeholders::_1));

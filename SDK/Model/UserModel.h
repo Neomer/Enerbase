@@ -68,6 +68,10 @@ signals:
     void LastVisitChanged(QDateTime LastVisit);
     void PasswordChanged(QString Password);
     void UsernameChanged(QString Username);
+
+    // AbstractEntity interface
+protected:
+    virtual void registerORMmethods() override;
 };
 
 #endif // USERMODEL_H

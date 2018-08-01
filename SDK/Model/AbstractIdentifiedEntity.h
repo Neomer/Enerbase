@@ -34,6 +34,7 @@ signals:
     // AbstractEntity interface
 public:
     virtual bool isValid() const override;
+    virtual void registerORMmethods() override;
 
 private:
     bool _valid;

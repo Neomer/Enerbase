@@ -44,7 +44,7 @@ public:
                 try {
                     (*event).invoke(args...);
                 } catch (MetadataEventCallException &) {
-
+                    continue;
                 }
                 return;
             }
@@ -64,7 +64,7 @@ public:
                     auto result = (*event).invoke<Rt>();
                     return result;
                 } catch (MetadataEventCallException &) {
-
+                    continue;
                 }
             }
         }

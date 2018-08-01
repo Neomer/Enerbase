@@ -13,8 +13,7 @@ AbstractIdentifiedEntity::AbstractIdentifiedEntity(QUuid uid, QObject *parent) :
     m_Id(uid),
     _valid(false)
 {
-    _metadata.registerMethod("Id", new Event(std::function<void(QUuid)>(std::bind(&AbstractIdentifiedEntity::setId, this, std::placeholders::_1))));
-    _metadata.registerMethod("Id", new Event(std::function<QUuid(void)>(std::bind(&AbstractIdentifiedEntity::getId, this))));
+    registerORMmethods();
 }
 
 QUuid AbstractIdentifiedEntity::getId() const
@@ -130,6 +129,14 @@ void AbstractIdentifiedEntity::setId(QUuid Id)
 bool AbstractIdentifiedEntity::isValid() const
 {
     return _valid;
+}
+
+void AbstractIdentifiedEntity::registerORMmethods()
+{
+    AbstractEntity::registerORMmethods();
+
+    _metadata.registerMethod("Id", new Event(std::function<void(QUuid)>(std::bind(&AbstractIdentifiedEntity::setId, this, std::placeholders::_1))));
+    _metadata.registerMethod("Id", new Event(std::function<QUuid(void)>(std::bind(&AbstractIdentifiedEntity::getId, this))));
 }
 
 void AbstractIdentifiedEntity::setIsValid(bool value)

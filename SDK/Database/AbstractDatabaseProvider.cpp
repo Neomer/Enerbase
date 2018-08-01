@@ -26,6 +26,5 @@ std::shared_ptr<AbstractDatabaseQuery> AbstractDatabaseProvider::exec(const QStr
     char *cs = new char[StringHelper::StringLength(sql)];
     StringHelper::StringToConstChar(sql, cs);
     auto ret = exec(cs);
-    delete [] cs;
     return ret;
 }
