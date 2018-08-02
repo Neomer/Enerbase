@@ -86,7 +86,8 @@ HEADERS += \
     Database/DuplicateException.h \
     Model/EntityMetadata.h \
     Model/MetadataEventCallException.h \
-    Model/Event.h
+    Model/Event.h \
+    Database/AbstractDatabaseStored.h
 
 unix {
     target.path = /usr/lib

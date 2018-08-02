@@ -18,10 +18,6 @@
     protected:  \
     virtual void registerORMmethods() { }
 
-#define ORM_REGISTER(method, bindname)           \
-    _metadata.registerWriteMethod("##bindname", std::bind(method, this, std::tr1::placeholders::_1));
-
-
 class SDKSHARED_EXPORT AbstractEntity :
         public QObject
 {

@@ -79,6 +79,4 @@ int main(int argc, char *argv[])
         printf("Exception: %s", ex.what());
         return -1;
     }
-
-    return 0;
 }

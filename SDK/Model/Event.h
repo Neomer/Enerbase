@@ -8,7 +8,7 @@
 
 #include <SDK/Model/MetadataEventCallException.h>
 
-class Event
+class MetaMethod
 {
 public:
     enum class EventType
@@ -38,7 +38,7 @@ private:
 
 public:
     template <typename Rt, typename... Args>
-    Event(EventType type, std::function<Rt(Args...)> aFunc) :
+    MetaMethod(EventType type, std::function<Rt(Args...)> aFunc) :
         p_base(new wrapped<Rt, Args...>(aFunc)),
         _type(type)
     {
@@ -46,7 +46,7 @@ public:
     }
 
     template <typename Rt, typename... Args>
-    Event& operator=(std::function<Rt(Args...)> aFunc)
+    MetaMethod& operator=(std::function<Rt(Args...)> aFunc)
     {
         p_base = std::unique_ptr<base>(new wrapped<Rt, Args...>(aFunc));
         return *this;
@@ -78,6 +78,11 @@ public:
         {
             throw MetadataEventCallException();
         }
+    }
+
+    EventType Type()
+    {
+        return _type;
     }
 };
 

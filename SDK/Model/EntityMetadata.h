@@ -31,12 +31,13 @@ class SDKSHARED_EXPORT EntityMetadata
 public:
     EntityMetadata();
 
-    void registerMethod(const char *name, Event *event);
+    void registerMethod(const char *name, MetaMethod *event);
+    std::vector<const char *> getMethods(MetaMethod::EventType type) const;
 
     template<typename... Args>
     void write(const char *name, Args ...args) const
     {
-        for (auto e : _methods_write)
+        for (auto e : _methods)
         {
             if (!strcmp(e.first, name))
             {
@@ -55,7 +56,7 @@ public:
     template<typename Rt>
     Rt read(const char *name) const
     {
-        for (auto e : _methods_write)
+        for (auto e : _methods)
         {
             if (!strcmp(e.first, name))
             {
@@ -72,7 +73,7 @@ public:
     }
 
 private:
-    std::multimap<const char *, Event *> _methods_write;
+    std::multimap<const char *, MetaMethod *> _methods;
 };
 
 #endif // ABSTRACTENTITYEX_H

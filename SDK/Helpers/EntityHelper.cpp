@@ -67,7 +67,7 @@ void EntityHelper::GetFieldsPrivate(const QMetaObject *metaObject, QStringList &
         }
         if (quote != 0)
         {
-            int l = strlen(metaProperty.name());
+            auto l = strlen(metaProperty.name());
             char *f = new char[l + 3];
             f[0] = quote;
             f[l + 1] = quote;
@@ -109,41 +109,13 @@ void EntityHelper::GetPropertiesPrivate(const AbstractEntity *entity, const QMet
 
 void EntityHelper::WritePropertiesPrivate(AbstractEntity *entity, const QMetaObject *metaObject, const AbstractDatabaseQuery *query)
 {
-    if (metaObject->superClass() != nullptr && strcmp(metaObject->superClass()->className(), "QObject"))
-    {
-        WritePropertiesPrivate(entity, metaObject->superClass(), query);
-    }
+    auto methods = entity->metadata().getMethods(MetaMethod::EventType::Write);
 
-    for (auto i = metaObject->propertyOffset(); i < metaObject->propertyCount(); i++)
+    for(auto m : methods)
     {
-        auto metaProperty = metaObject->property(i);
-        if (!metaProperty.isWritable() || metaProperty.isConstant())
+        if (query->hasField(m))
         {
-            continue;
-        }
-        if (!query->hasField(metaProperty.name()))
-        {
-            continue;
-        }
-        try
-        {
-            auto value = query->value(metaProperty.name());
-            if (!value.isValid())
-            {
-                continue;
-            }
-            if (!metaProperty.write(entity, value))
-            {
-                throw PropertyReadWriteException(entity, metaProperty.name());
-            }
-        }
-        catch (OutOfRangeException &)
-        {
-            continue;
-        }
-        catch (DataFormatException &)
-        {
-            continue;
+            entity->metadata().write(m);
         }
     }
 }
